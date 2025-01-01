@@ -29,7 +29,6 @@ const Blog = () => {
 
       <section className="relative z-20 xl:-mt-[50px]">
         <div className="mx-auto bg-primary-foreground p-6 lg:w-[calc(100%-160px-160px)] lg:p-10">
-          {/* Desktop Navigation */}
           <div className="mb-6 hidden flex-wrap lg:flex">
             <Link
               href="/blog"
