@@ -16,13 +16,21 @@ const Blog = () => {
       ? posts
       : posts.filter((post) => post.category.toLowerCase() === category);
 
+  const handleCategoryChange = (
+    event: React.ChangeEvent<HTMLSelectElement>,
+  ) => {
+    const selectedCategory = event.target.value;
+    window.location.href = `/blog?category=${selectedCategory}`;
+  };
+
   return (
     <>
       <Hero />
 
       <section className="relative z-20 xl:-mt-[50px]">
         <div className="mx-auto bg-primary-foreground p-6 lg:w-[calc(100%-160px-160px)] lg:p-10">
-          <div className="mb-6 flex flex-wrap">
+          {/* Desktop Navigation */}
+          <div className="mb-6 hidden flex-wrap lg:flex">
             <Link
               href="/blog"
               className={`px-4 py-2 text-sm font-bold italic ${category === "all posts" ? "bg-primary text-white" : "text-foreground"}`}
@@ -58,6 +66,21 @@ const Blog = () => {
               Basketball
             </Link>
           </div>
+
+          <div className="mb-6 lg:hidden">
+            <select
+              onChange={handleCategoryChange}
+              value={category}
+              className="bg-white px-4 py-2 text-sm font-bold italic text-foreground"
+            >
+              <option value="all posts">All Posts</option>
+              <option value="featured">Featured</option>
+              <option value="football">Football</option>
+              <option value="baseball">Baseball</option>
+              <option value="basketball">Basketball</option>
+            </select>
+          </div>
+
           <div className="flex flex-col items-center">
             <div className="mb-12 w-full space-y-10">
               {filteredPosts.map((post, index) => (
