@@ -1,0 +1,64 @@
+{
+  "posts": [
+    {
+      "imageSrc": "https://static.wixstatic.com/media/c22c23_26dfdd2d51e54a418ba93d1d78a6bfd5~mv2_d_4912_2760_s_4_2.png/v1/fill/w_453,h_340,fp_0.50_0.50,q_95,enc_auto/c22c23_26dfdd2d51e54a418ba93d1d78a6bfd5~mv2_d_4912_2760_s_4_2.png",
+      "altText": "Post 1",
+      "author": "Admin",
+      "date": "Jun 4, 2023",
+      "readTime": "1 min read",
+      "title": "How We Would Improve Rate of Play",
+      "description": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolor necessitatibus incidunt, voluptatum quibusdam quo et quis repudiandae, tempora corrupti beatae nam asperiores laboriosam.",
+      "views": 303,
+      "comments": 0,
+      "likes": 7
+    },
+    {
+      "imageSrc": "https://static.wixstatic.com/media/c22c23_26dfdd2d51e54a418ba93d1d78a6bfd5~mv2_d_4912_2760_s_4_2.png/v1/fill/w_453,h_340,fp_0.50_0.50,q_95,enc_auto/c22c23_26dfdd2d51e54a418ba93d1d78a6bfd5~mv2_d_4912_2760_s_4_2.png",
+      "altText": "Post 2",
+      "author": "Admin",
+      "date": "Jun 5, 2023",
+      "readTime": "2 min read",
+      "title": "The Future of Play",
+      "description": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolor necessitatibus incidunt, voluptatum quibusdam quo et quis repudiandae, tempora corrupti beatae nam asperiores laboriosam.",
+      "views": 500,
+      "comments": 10,
+      "likes": 15
+    },
+    {
+      "imageSrc": "https://static.wixstatic.com/media/c22c23_26dfdd2d51e54a418ba93d1d78a6bfd5~mv2_d_4912_2760_s_4_2.png/v1/fill/w_453,h_340,fp_0.50_0.50,q_95,enc_auto/c22c23_26dfdd2d51e54a418ba93d1d78a6bfd5~mv2_d_4912_2760_s_4_2.png",
+      "altText": "Featured Post",
+      "author": "Admin",
+      "date": "Jun 4, 2023",
+      "readTime": "1 min read",
+      "title": "How We Would Improve Rate of Play",
+      "description": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolor necessitatibus incidunt, voluptatum quibusdam quo et quis repudiandae, tempora corrupti beatae nam asperiores laboriosam.",
+      "views": 303,
+      "comments": 0,
+      "likes": 7
+    },
+    {
+      "imageSrc": "https://static.wixstatic.com/media/c22c23_26dfdd2d51e54a418ba93d1d78a6bfd5~mv2_d_4912_2760_s_4_2.png/v1/fill/w_453,h_340,fp_0.50_0.50,q_95,enc_auto/c22c23_26dfdd2d51e54a418ba93d1d78a6bfd5~mv2_d_4912_2760_s_4_2.png",
+      "altText": "Featured Post",
+      "author": "Admin",
+      "date": "Jun 4, 2023",
+      "readTime": "1 min read",
+      "title": "How We Would Improve Rate of Play",
+      "description": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolor necessitatibus incidunt, voluptatum quibusdam quo et quis repudiandae, tempora corrupti beatae nam asperiores laboriosam.",
+      "views": 303,
+      "comments": 0,
+      "likes": 7
+    },
+    {
+      "imageSrc": "https://static.wixstatic.com/media/c22c23_26dfdd2d51e54a418ba93d1d78a6bfd5~mv2_d_4912_2760_s_4_2.png/v1/fill/w_453,h_340,fp_0.50_0.50,q_95,enc_auto/c22c23_26dfdd2d51e54a418ba93d1d78a6bfd5~mv2_d_4912_2760_s_4_2.png",
+      "altText": "Featured Post",
+      "author": "Admin",
+      "date": "Jun 4, 2023",
+      "readTime": "1 min read",
+      "title": "How We Would Improve Rate of Play",
+      "description": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolor necessitatibus incidunt, voluptatum quibusdam quo et quis repudiandae, tempora corrupti beatae nam asperiores laboriosam.",
+      "views": 303,
+      "comments": 0,
+      "likes": 7
+    }
+  ]
+}
