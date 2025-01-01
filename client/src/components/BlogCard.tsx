@@ -28,7 +28,7 @@ const BlogCard: React.FC<BlogCardProps> = ({
   likes,
 }) => {
   return (
-    <div className="grid lg:grid-cols-2">
+    <div className="grid md:grid-cols-2">
       <div className="relative overflow-hidden pt-[60%]">
         <Image
           src={imageSrc}

@@ -1,5 +1,7 @@
 import BlogCard from "@/components/BlogCard";
 import postsData from "@/data.json";
+import { ChevronRight } from "lucide-react";
+import Link from "next/link";
 
 const LatestNews: React.FC = () => {
   const posts = postsData.posts;
@@ -10,10 +12,22 @@ const LatestNews: React.FC = () => {
         <div className="mb-10">
           <h2 className="text-3xl font-bold italic">The Latest News</h2>
         </div>
-        <div className="space-y-10">
-          {posts.slice(0, posts.length - 1).map((post, index) => (
-            <BlogCard key={index} {...post} />
-          ))}
+        <div className="flex flex-col items-center">
+          <div className="mb-12 w-full space-y-10">
+            {posts.map((post, index) => (
+              <BlogCard key={index} {...post} />
+            ))}
+          </div>
+
+          <Link
+            href="/blog"
+            className="flex h-10 w-fit items-center border border-foreground px-5"
+          >
+            <span className="text-sm text-foreground">Listen Now</span>
+            <div>
+              <ChevronRight className="text-foreground" />
+            </div>
+          </Link>
         </div>
       </div>
     </section>
