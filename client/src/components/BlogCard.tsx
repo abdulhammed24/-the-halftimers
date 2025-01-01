@@ -52,9 +52,9 @@ const BlogCard: React.FC<BlogCardProps> = ({
             </div>
           </div>
         </div>
-        <div className="space-y-3">
+        <div className="mb-6 space-y-3">
           <h3 className="text-2xl font-bold italic text-primary">{title}</h3>
-          <p className="line-clamp-3 pb-6 text-xs font-normal">{description}</p>
+          <p className="line-clamp-3 text-xs font-normal">{description}</p>
         </div>
         <div className="mt-3 pt-3">
           <span className="mb-4 block h-[1px] bg-foreground/20"></span>
