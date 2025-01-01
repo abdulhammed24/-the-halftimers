@@ -93,10 +93,12 @@ const BlogContent = () => {
 
 const Blog = () => {
   return (
-    <Suspense fallback={<div>Loading...</div>}>
+    <>
       <Hero />
-      <BlogContent />
-    </Suspense>
+      <Suspense fallback={<div>Loading...</div>}>
+        <BlogContent />
+      </Suspense>
+    </>
   );
 };
 
