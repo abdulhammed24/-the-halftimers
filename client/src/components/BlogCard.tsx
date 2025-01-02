@@ -1,6 +1,7 @@
 import Image from "next/image";
 import { CircleUser, Heart } from "lucide-react";
 import { shimmer, toBase64 } from "@/utils/imageUtils";
+import Link from "next/link";
 
 interface BlogCardProps {
   imageSrc: string;
@@ -27,6 +28,8 @@ const BlogCard: React.FC<BlogCardProps> = ({
   comments,
   likes,
 }) => {
+  const slug = "afcon-championship-journey";
+
   return (
     <div className="grid md:grid-cols-2">
       <div className="relative overflow-hidden pt-[60%]">
@@ -38,7 +41,10 @@ const BlogCard: React.FC<BlogCardProps> = ({
           placeholder={`data:image/svg+xml;base64,${toBase64(shimmer(700, 475))}`}
         />
       </div>
-      <div className="bg-primary-foreground p-8 text-[10px]">
+      <Link
+        href={`/post/${slug}`}
+        className="bg-primary-foreground p-8 text-[10px]"
+      >
         <div className="mb-3 flex items-center gap-3">
           <span>
             <CircleUser />
@@ -79,7 +85,7 @@ const BlogCard: React.FC<BlogCardProps> = ({
             </div>
           </div>
         </div>
-      </div>
+      </Link>
     </div>
   );
 };
