@@ -1,20 +1,27 @@
-import Featured from "./Featured";
+import { Suspense } from "react";
 import Hero from "./Hero";
-import LatestNews from "./LatestNews";
 import Podcast from "./Podcast";
+import dynamic from "next/dynamic";
 
-const HeroSection = () => {
+const Featured = dynamic(() => import("./Featured"));
+const LatestNews = dynamic(() => import("./LatestNews"));
+
+const HomePage = () => {
   return (
     <>
       <Hero />
 
-      <Featured />
+      <Suspense fallback={<div>Loading Featured...</div>}>
+        <Featured />
+      </Suspense>
 
       <Podcast />
 
-      <LatestNews />
+      <Suspense fallback={<div>Loading Latest News...</div>}>
+        <LatestNews />
+      </Suspense>
     </>
   );
 };
 
-export default HeroSection;
+export default HomePage;

@@ -5,7 +5,7 @@ const Hero = () => {
   return (
     <section>
       <div className="mx-auto lg:w-[calc(100%-80px-80px)] lg:min-w-[980px]">
-        <div className="relative h-[400px] w-full overflow-hidden lg:h-[700px]">
+        <div className="relative h-[400px] w-full overflow-hidden lg:h-[600px]">
           <Image
             src="https://static.wixstatic.com/media/c22c23_ab84fc9dae5646df8722fb28876e32cf~mv2_d_4941_3288_s_4_2.jpg/v1/fill/w_1339,h_590,al_b,q_85,usm_0.66_1.00_0.01,enc_avif,quality_auto/c22c23_ab84fc9dae5646df8722fb28876e32cf~mv2_d_4941_3288_s_4_2.jpg"
             alt="hero"
@@ -15,7 +15,7 @@ const Hero = () => {
           />
         </div>
         <div className="absolute left-1/2 top-[15%] z-10 -translate-x-1/2 -translate-y-1/2 transform text-center lg:top-[25%]">
-          <h1 className="text-4xl font-bold italic text-primary-foreground lg:text-9xl">
+          <h1 className="text-4xl font-bold italic text-primary-foreground lg:text-8xl">
             The <br />
             Halftimers
           </h1>
