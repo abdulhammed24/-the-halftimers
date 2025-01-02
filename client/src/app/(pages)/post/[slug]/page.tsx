@@ -12,7 +12,7 @@ interface Params {
 }
 
 const PostPage: FC<{ params: Params }> = async ({ params }) => {
-  const { slug } = await params; // Await the params here
+  const { slug } = await params;
 
   return (
     <section className="py-10">
