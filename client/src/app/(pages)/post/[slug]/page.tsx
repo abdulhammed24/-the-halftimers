@@ -11,11 +11,8 @@ interface Params {
   slug: string;
 }
 
-const PostPage: FC<{ params: Params }> = async ({ params }) => {
-  const { slug } = await params;
-
-  const res = await fetch(`https://localhost:3000/posts/${slug}`);
-  const post = await res.json();
+const PostPage: FC<{ params: Params }> = ({ params }) => {
+  const { slug } = params;
 
   return (
     <section className="py-10">
@@ -129,7 +126,7 @@ const PostPage: FC<{ params: Params }> = async ({ params }) => {
           </div>
         </div>
 
-        {/* <h1>Post: {slug}</h1> */}
+        <h1>Post: {slug}</h1>
       </div>
     </section>
   );
