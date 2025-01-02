@@ -138,12 +138,14 @@
 
 import { FC } from "react";
 
+// Type for the Params object
 interface Params {
   slug: string;
 }
 
+// Page component accepts params as part of props
 const PostPage: FC<{ params: Params }> = ({ params }) => {
-  const { slug } = params;
+  const { slug } = params; // Direct access to slug without awaiting
 
   return (
     <div>
