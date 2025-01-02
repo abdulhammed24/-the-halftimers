@@ -14,6 +14,9 @@ interface Params {
 const PostPage: FC<{ params: Params }> = async ({ params }) => {
   const { slug } = await params;
 
+  const res = await fetch(`https://localhost:3000/posts/${slug}`);
+  const post = await res.json();
+
   return (
     <section className="py-10">
       <div className="mx-auto lg:w-[calc(100%-300px-300px)]">
