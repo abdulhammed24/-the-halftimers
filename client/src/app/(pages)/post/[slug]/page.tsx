@@ -7,12 +7,11 @@ export default async function PostPage({
   params: Promise<{ slug: string }>;
 }) {
   const slug = (await params).slug;
+  console.log(slug);
 
   return (
     <>
       <PostDetails />
-      <h1>Post: {slug}</h1>
-
       <RecentPosts />
     </>
   );

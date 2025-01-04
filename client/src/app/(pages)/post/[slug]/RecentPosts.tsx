@@ -1,4 +1,5 @@
 // components/RecentPosts.tsx
+import Container from "@/components/Container";
 import { Eye, Heart, MessageSquare } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
@@ -36,7 +37,7 @@ const posts = [
 export default function RecentPosts() {
   return (
     <section className="py-10">
-      <div className="mx-auto lg:w-[calc(100%-200px-200px)] lg:min-w-[980px]">
+      <Container width="large">
         <div className="mb-6 flex items-center justify-between">
           <h2 className="text-xl font-semibold">Recent Posts</h2>
           <Link href="#" className="text-sm hover:text-primary">
@@ -48,7 +49,7 @@ export default function RecentPosts() {
           {posts.map((post) => (
             <div
               key={post.id}
-              className="overflow-hidden rounded-lg bg-white shadow-sm"
+              className="overflow-hidden rounded-lg bg-primary-foreground shadow-sm"
             >
               <Image
                 src={post.imageUrl}
@@ -86,7 +87,7 @@ export default function RecentPosts() {
             </div>
           ))}
         </div>
-      </div>
+      </Container>
     </section>
   );
 }

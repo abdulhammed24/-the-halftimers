@@ -1,14 +1,14 @@
-import { Music2Icon } from "lucide-react";
 import Link from "next/link";
 import { BiMusic } from "react-icons/bi";
 import { BsTwitterX } from "react-icons/bs";
 import { FaSpotify } from "react-icons/fa";
 import { FaFacebookF } from "react-icons/fa6";
+import Container from "./Container";
 
 const Footer = () => {
   return (
     <footer className="bg-foreground py-20">
-      <div className="mx-auto w-[calc(100%-80px-80px)] lg:min-w-[980px]">
+      <Container>
         <div className="grid gap-10">
           <div>
             <Link
@@ -50,7 +50,7 @@ const Footer = () => {
             </p>
           </div>
         </div>
-      </div>
+      </Container>
     </footer>
   );
 };

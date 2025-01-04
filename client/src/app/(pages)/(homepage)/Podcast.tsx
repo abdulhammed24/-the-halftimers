@@ -1,3 +1,4 @@
+import Container from "@/components/Container";
 import { shimmer, toBase64 } from "@/utils/imageUtils";
 import { ChevronRight } from "lucide-react";
 import Image from "next/image";
@@ -5,7 +6,7 @@ import Image from "next/image";
 const Podcast = () => {
   return (
     <section className="py-10">
-      <div className="mx-auto lg:w-[calc(100%-80px-80px)] lg:min-w-[980px]">
+      <Container>
         <div className="relative bg-foreground">
           <div className="absolute inset-0 z-0 overflow-hidden">
             <Image
@@ -55,7 +56,7 @@ const Podcast = () => {
             </div>
           </div>{" "}
         </div>
-      </div>
+      </Container>
     </section>
   );
 };

@@ -1,10 +1,11 @@
+import Container from "@/components/Container";
 import { shimmer, toBase64 } from "@/utils/imageUtils";
 
 import Image from "next/image";
 const Hero = () => {
   return (
     <section>
-      <div className="mx-auto lg:w-[calc(100%-80px-80px)] lg:min-w-[980px]">
+      <Container>
         <div className="relative h-[400px] w-full overflow-hidden lg:h-[600px]">
           <Image
             src="https://static.wixstatic.com/media/c22c23_ab84fc9dae5646df8722fb28876e32cf~mv2_d_4941_3288_s_4_2.jpg/v1/fill/w_1339,h_590,al_b,q_85,usm_0.66_1.00_0.01,enc_avif,quality_auto/c22c23_ab84fc9dae5646df8722fb28876e32cf~mv2_d_4941_3288_s_4_2.jpg"
@@ -48,7 +49,7 @@ const Hero = () => {
             </div>
           </div>
         </div>
-      </div>
+      </Container>
     </section>
   );
 };

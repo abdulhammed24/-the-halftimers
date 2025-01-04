@@ -1,3 +1,5 @@
+"use client";
+
 import { shimmer, toBase64 } from "@/utils/imageUtils";
 import { CircleUser, Heart } from "lucide-react";
 import Image from "next/image";
@@ -6,13 +8,18 @@ import { Link as LinkIcon } from "lucide-react";
 import { BsTwitterX } from "react-icons/bs";
 import { FaFacebookF } from "react-icons/fa";
 import { LiaLinkedinIn } from "react-icons/lia";
-
+import { handleShare } from "@/utils/shareUtils";
 import SharePopover from "./SharePopover";
+import { useState } from "react";
+import * as Tooltip from "@radix-ui/react-tooltip";
+import Container from "@/components/Container";
 
 const PostDetails = () => {
+  const [copied, setCopied] = useState(false);
+
   return (
     <section className="py-10">
-      <div className="mx-auto lg:w-[calc(100%-300px-300px)]">
+      <Container width="medium">
         <div className="flex items-center justify-between gap-5">
           <div>
             <div className="flex items-center gap-3">
@@ -70,7 +77,7 @@ const PostDetails = () => {
               Design with Ease
             </p>
 
-            <blockquote className="border-l-primary-hover my-4 border-l-4 py-1 pl-5">
+            <blockquote className="my-4 border-l-4 border-l-primary-hover py-1 pl-5">
               <em className="text-xl lg:text-2xl">
                 “Do you have a design in mind for your blog? Whether you prefer
                 a trendy postcard look or you’re going for a more editorial
@@ -92,7 +99,7 @@ const PostDetails = () => {
               Create Relevant Content
             </p>
 
-            <blockquote className="border-l-primary-hover my-4 border-l-4 py-1 pl-5">
+            <blockquote className="my-4 border-l-4 border-l-primary-hover py-1 pl-5">
               <em className="text-xl lg:text-2xl">
                 " Lorem ipsum dolor sit amet consectetur adipisicing elit.
                 Repudiandae, dolore iste. Itaque necessitatibus voluptate fugiat
@@ -106,20 +113,36 @@ const PostDetails = () => {
         <div className="mt-14 border-y border-y-foreground/20 py-5">
           <div className="flex flex-wrap justify-between gap-5">
             <div className="flex items-center gap-5">
-              <button>
+              <button onClick={() => handleShare("facebook", setCopied)}>
                 <FaFacebookF size={18} />
               </button>
-              <button>
+              <button onClick={() => handleShare("twitter", setCopied)}>
                 <BsTwitterX size={18} />
-              </button>{" "}
-              <button>
-                <LiaLinkedinIn size={18} />
-              </button>{" "}
-              <button>
-                <LinkIcon size={18} />
               </button>
+              <button onClick={() => handleShare("linkedin", setCopied)}>
+                <LiaLinkedinIn size={18} />
+              </button>
+              <Tooltip.Provider>
+                <Tooltip.Root open={copied}>
+                  <Tooltip.Trigger asChild>
+                    <button onClick={() => handleShare("link", setCopied)}>
+                      <LinkIcon size={20} />
+                    </button>
+                  </Tooltip.Trigger>
+                  <Tooltip.Portal>
+                    <Tooltip.Content
+                      className="z-50 rounded-md bg-black px-2 py-1 text-sm text-white"
+                      side="top"
+                      align="center"
+                      sideOffset={8}
+                    >
+                      Link copied!
+                      <Tooltip.Arrow className="fill-black" />
+                    </Tooltip.Content>
+                  </Tooltip.Portal>
+                </Tooltip.Root>
+              </Tooltip.Provider>
             </div>
-
             <div>
               <Link
                 href="/blog?category=basketball"
@@ -149,7 +172,7 @@ const PostDetails = () => {
             </button>
           </div>
         </div>
-      </div>
+      </Container>
     </section>
   );
 };

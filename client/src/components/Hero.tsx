@@ -1,5 +1,6 @@
 import { shimmer, toBase64 } from "@/utils/imageUtils";
 import Image from "next/image";
+import Container from "./Container";
 
 interface HeroProps {
   title: string;
@@ -8,7 +9,7 @@ interface HeroProps {
 const Hero: React.FC<HeroProps> = ({ title }) => {
   return (
     <section>
-      <div className="mx-auto lg:w-[calc(100%-80px-80px)] lg:min-w-[980px]">
+      <Container>
         <div className="relative w-full overflow-hidden bg-foreground">
           <div className="absolute inset-0 z-0 overflow-hidden">
             <Image
@@ -25,7 +26,7 @@ const Hero: React.FC<HeroProps> = ({ title }) => {
             </p>
           </div>
         </div>
-      </div>
+      </Container>
     </section>
   );
 };

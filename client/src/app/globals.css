@@ -65,7 +65,7 @@
 
 body {
   color: hsl(var(--foreground));
-  background: hsl(var(--background));
+  background: hsl(var(--primary-foreground));
   font-family: var(--font-poppins), sans-serif;
 }
 
