@@ -40,7 +40,7 @@ const PostDetails = () => {
 
         <div className="mt-10">
           <div>
-            <h1 className="text-6xl font-bold italic text-primary">
+            <h1 className="text-4xl font-bold italic text-primary md:text-6xl">
               Our Top Rookies for the Upcoming Season
             </h1>
           </div>

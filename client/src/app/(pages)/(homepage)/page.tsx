@@ -1,10 +1,10 @@
 import { Suspense } from "react";
-import Hero from "./Hero";
-import Podcast from "./Podcast";
+import Hero from "./components/Hero";
+import Podcast from "./components/Podcast";
 import dynamic from "next/dynamic";
 
-const Featured = dynamic(() => import("./Featured"));
-const LatestNews = dynamic(() => import("./LatestNews"));
+const Featured = dynamic(() => import("./components/Featured"));
+const LatestNews = dynamic(() => import("./components/LatestNews"));
 
 const HomePage = () => {
   return (

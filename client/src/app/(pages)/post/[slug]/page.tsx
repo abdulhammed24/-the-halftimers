@@ -1,5 +1,6 @@
-import PostDetails from "./PostDetails";
-import RecentPosts from "./RecentPosts";
+import CommentsSection from "../components/Comments/CommentsSection";
+import PostDetails from "../components/PostDetails";
+import RecentPosts from "../components/RecentPosts";
 
 export default async function PostPage({
   params,
@@ -13,6 +14,7 @@ export default async function PostPage({
     <>
       <PostDetails />
       <RecentPosts />
+      <CommentsSection />
     </>
   );
 }

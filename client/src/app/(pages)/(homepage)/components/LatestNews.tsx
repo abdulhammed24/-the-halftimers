@@ -10,7 +10,7 @@ const LatestNews: React.FC = () => {
   return (
     <section className="py-10">
       <Container width="large">
-        <div className="p-6 lg:p-10">
+        <div className="lg:p-10">
           <div className="mb-10">
             <h2 className="text-3xl font-bold italic">The Latest News</h2>
           </div>
