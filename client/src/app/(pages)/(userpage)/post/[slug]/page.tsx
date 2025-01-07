@@ -13,8 +13,8 @@ export default async function PostPage({
   return (
     <>
       <PostDetails />
-      <RecentPosts />
       <CommentsSection />
+      <RecentPosts />
     </>
   );
 }

@@ -26,7 +26,7 @@ const PostDetails = () => {
               <span>
                 <CircleUser size={30} />
               </span>
-              <div className="flex items-center text-sm">
+              <div className="flex flex-wrap items-center text-balance text-sm">
                 <span>Admin</span>
                 <span className="mx-2 block size-[2px] rounded-full bg-foreground" />{" "}
                 <span>Jun 3, 2023</span>{" "}
@@ -78,7 +78,7 @@ const PostDetails = () => {
             </p>
 
             <blockquote className="my-4 border-l-4 border-l-primary-hover py-1 pl-5">
-              <em className="text-xl lg:text-2xl">
+              <em className="text-lg lg:text-2xl">
                 “Do you have a design in mind for your blog? Whether you prefer
                 a trendy postcard look or you’re going for a more editorial
                 style blog - there’s a stunning layout for everyone.”
@@ -100,7 +100,7 @@ const PostDetails = () => {
             </p>
 
             <blockquote className="my-4 border-l-4 border-l-primary-hover py-1 pl-5">
-              <em className="text-xl lg:text-2xl">
+              <em className="text-lg lg:text-2xl">
                 " Lorem ipsum dolor sit amet consectetur adipisicing elit.
                 Repudiandae, dolore iste. Itaque necessitatibus voluptate fugiat
                 et amet optio adipisci, eum neque vitae consequuntur ipsam

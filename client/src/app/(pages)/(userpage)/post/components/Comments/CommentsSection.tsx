@@ -55,7 +55,7 @@ export default function CommentsSection() {
 
   return (
     <div className="mx-auto max-w-2xl px-4 py-8">
-      <h2 className="mb-4 text-2xl font-bold">Comments</h2>
+      <h2 className="mb-4 text-2xl font-bold italic">Comments</h2>
 
       <div className="mb-8">
         <CommentForm onSubmit={addComment} />

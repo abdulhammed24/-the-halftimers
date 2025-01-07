@@ -5,18 +5,17 @@ import Image from "next/image";
 const Hero = () => {
   return (
     <section>
-      {/* <div className="relative h-[400px] w-full overflow-hidden lg:h-[600px]">
+      <Container className="relative max-md:max-w-full max-md:px-0">
+        <div className="relative z-0 h-[400px] w-full overflow-hidden lg:h-[600px]">
           <Image
-          src="https://static.wixstatic.com/media/c22c23_ab84fc9dae5646df8722fb28876e32cf~mv2_d_4941_3288_s_4_2.jpg/v1/fill/w_1339,h_590,al_b,q_85,usm_0.66_1.00_0.01,enc_avif,quality_auto/c22c23_ab84fc9dae5646df8722fb28876e32cf~mv2_d_4941_3288_s_4_2.jpg"
-          alt="hero"
-          fill
-          className="object-cover"
-          placeholder={`data:image/svg+xml;base64,${toBase64(shimmer(700, 475))}`}
+            src="https://static.wixstatic.com/media/c22c23_ab84fc9dae5646df8722fb28876e32cf~mv2_d_4941_3288_s_4_2.jpg/v1/fill/w_1339,h_590,al_b,q_85,usm_0.66_1.00_0.01,enc_avif,quality_auto/c22c23_ab84fc9dae5646df8722fb28876e32cf~mv2_d_4941_3288_s_4_2.jpg"
+            alt="hero"
+            fill
+            className="object-cover"
+            placeholder={`data:image/svg+xml;base64,${toBase64(shimmer(700, 475))}`}
           />
-          </div> */}
-      <div>
-        <Container className="max-md:max-w-full">
-          <div className="z-10 flex flex-col items-center justify-center bg-foreground py-40 text-center">
+
+          <div className="absolute z-10 flex w-full flex-col items-center justify-center py-40 text-center">
             <h1 className="text-4xl font-bold italic text-primary-foreground lg:text-8xl">
               The <br />
               Halftimers
@@ -50,8 +49,8 @@ const Hero = () => {
               </div>
             </div>
           </div>
-        </Container>
-      </div>
+        </div>
+      </Container>
     </section>
   );
 };

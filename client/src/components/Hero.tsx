@@ -9,7 +9,7 @@ interface HeroProps {
 const Hero: React.FC<HeroProps> = ({ title }) => {
   return (
     <section>
-      <Container>
+      <Container className="max-md:px-0">
         <div className="relative w-full overflow-hidden bg-foreground">
           <div className="absolute inset-0 z-0 overflow-hidden">
             <Image
