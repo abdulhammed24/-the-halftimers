@@ -13,7 +13,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import Link from "next/link";
-import { Eye, EyeOff } from "lucide-react"; // Import icons for eye toggle
+import { Eye, EyeOff } from "lucide-react";
 import { useState } from "react";
 
 // Define the validation schema using Zod
