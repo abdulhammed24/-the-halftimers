@@ -15,6 +15,9 @@ import { Label } from "@/components/ui/label";
 import Link from "next/link";
 import { Eye, EyeOff } from "lucide-react";
 import { useState } from "react";
+import { useToast } from "@/hooks/use-toast";
+import { useRouter } from "next/navigation";
+import { useRegisterMutation } from "@/rtk-query/features/authSlice";
 
 // Define the validation schema using Zod
 const registrationSchema = z.object({
@@ -27,8 +30,11 @@ const registrationSchema = z.object({
 type RegistrationFormData = z.infer<typeof registrationSchema>;
 
 export default function RegisterPage() {
+  const { toast } = useToast();
+  const router = useRouter();
+  const [register, { isLoading }] = useRegisterMutation();
   const {
-    register,
+    register: formRegister,
     handleSubmit,
     formState: { errors },
   } = useForm<RegistrationFormData>({
@@ -36,10 +42,28 @@ export default function RegisterPage() {
   });
   const [showPassword, setShowPassword] = useState(false);
 
-  const onSubmit = (data: RegistrationFormData) => {
-    console.log(data);
-    // Handle registration logic here
-    // After successful registration, redirect to verify email
+  const onSubmit = async (data: RegistrationFormData) => {
+    try {
+      await register(data).unwrap();
+      toast({
+        title: "Registration successful!",
+        description: "Please check your email to verify your account.",
+        duration: 1500,
+      });
+
+      router.push("/verify-email");
+    } catch (error) {
+      const err = error as { data?: { message?: string } };
+
+      toast({
+        title: "Registration failed",
+        description:
+          err.data?.message ||
+          "There was a problem with your registration. Please try again.",
+        duration: 1500,
+        variant: "destructive",
+      });
+    }
   };
 
   return (
@@ -51,14 +75,14 @@ export default function RegisterPage() {
         <form onSubmit={handleSubmit(onSubmit)}>
           <div className="mb-4">
             <Label htmlFor="name">Name</Label>
-            <Input type="text" id="name" {...register("name")} />
+            <Input type="text" id="name" {...formRegister("name")} />
             {errors.name && (
               <p className="text-sm text-destructive">{errors.name.message}</p>
             )}
           </div>
           <div className="mb-4">
             <Label htmlFor="email">Email</Label>
-            <Input type="email" id="email" {...register("email")} />
+            <Input type="email" id="email" {...formRegister("email")} />
             {errors.email && (
               <p className="text-sm text-destructive">{errors.email.message}</p>
             )}
@@ -70,7 +94,7 @@ export default function RegisterPage() {
                 type={showPassword ? "text" : "password"}
                 id="password"
                 className="pr-8"
-                {...register("password")}
+                {...formRegister("password")}
               />
               <button
                 type="button"
@@ -86,8 +110,8 @@ export default function RegisterPage() {
               </p>
             )}
           </div>
-          <Button type="submit" className="w-full">
-            Register
+          <Button className="w-full" disabled={isLoading}>
+            {isLoading ? "Registering..." : "Register"}
           </Button>
         </form>
       </CardContent>

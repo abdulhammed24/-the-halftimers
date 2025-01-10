@@ -7,12 +7,19 @@ import nodemailer from "nodemailer";
 export const register = async (req, res) => {
   const { name, email, password, role } = req.body;
   try {
-    // console.log(req.body);
+    // Check if the user already exists
+    const existingUser = await User.findOne({ email });
+    if (existingUser) {
+      return res.status(400).json({ message: "User already exists with this email." });
+    }
+
+    // Hash the password
     const hashedPassword = await bcrypt.hash(password, 10);
     const user = await User.create({ name, email, password: hashedPassword, role });
-    res.status(201).json({ message: "User registered", user });
+    res.status(201).json({ message: "User registered successfully", user });
   } catch (error) {
-    res.status(400).json({ message: error.message });
+    // Customize error message for other potential errors
+    res.status(400).json({ message: "Registration failed." });
   }
 };
 
@@ -27,7 +34,7 @@ export const login = async (req, res) => {
     const token = jwt.sign({ id: user._id, role: user.role }, process.env.JWT_SECRET, { expiresIn: "1h" });
     res.json({ token });
   } catch (error) {
-    res.status(500).json({ message: error.message });
+    res.status(500).json({ message: "Something went wrong" });
   }
 };
 
@@ -69,7 +76,7 @@ export const forgotPassword = async (req, res) => {
 
     res.json({ message: "Reset link sent to email" });
   } catch (error) {
-    res.status(500).json({ message: error.message });
+    res.status(500).json({ message: "Something went wrong" });
   }
 };
 
@@ -92,7 +99,7 @@ export const resetPassword = async (req, res) => {
 
     res.json({ message: "Password has been reset successfully" });
   } catch (error) {
-    res.status(500).json({ message: error.message });
+    res.status(500).json({ message: "Something went wrong" });
   }
 };
 
@@ -134,7 +141,7 @@ export const verifyEmail = async (req, res) => {
 
     res.json({ message: "Verification link sent to email" });
   } catch (error) {
-    res.status(500).json({ message: error.message });
+    res.status(500).json({ message: "Something went wrong" });
   }
 };
 
@@ -156,6 +163,6 @@ export const verifyEmailToken = async (req, res) => {
 
     res.json({ message: "Email verified successfully" });
   } catch (error) {
-    res.status(500).json({ message: error.message });
+    res.status(500).json({ message: "Something went wrong" });
   }
 };
