@@ -19,14 +19,14 @@ import { useToast } from "@/hooks/use-toast";
 import { useRouter } from "next/navigation";
 import { useRegisterMutation } from "@/rtk-query/features/authSlice";
 
-// Define the validation schema using Zod
+//
 const registrationSchema = z.object({
   name: z.string().min(6, "Name is required"),
   email: z.string().email("Invalid email address"),
   password: z.string().min(6, "Password must be at least 6 characters long"),
 });
 
-// Define the type for form data
+//
 type RegistrationFormData = z.infer<typeof registrationSchema>;
 
 export default function RegisterPage() {
@@ -36,6 +36,7 @@ export default function RegisterPage() {
   const {
     register: formRegister,
     handleSubmit,
+    reset,
     formState: { errors },
   } = useForm<RegistrationFormData>({
     resolver: zodResolver(registrationSchema),
@@ -48,10 +49,10 @@ export default function RegisterPage() {
       toast({
         title: "Registration successful!",
         description: "Please check your email to verify your account.",
-        duration: 1500,
+        duration: 1800,
       });
 
-      router.push("/verify-email");
+      reset();
     } catch (error) {
       const err = error as { data?: { message?: string } };
 
@@ -60,7 +61,7 @@ export default function RegisterPage() {
         description:
           err.data?.message ||
           "There was a problem with your registration. Please try again.",
-        duration: 1500,
+        duration: 1800,
         variant: "destructive",
       });
     }

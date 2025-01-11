@@ -7,7 +7,7 @@ import nodemailer from "nodemailer";
 export const register = async (req, res) => {
   const { name, email, password, role } = req.body;
   try {
-    // Check if the user already exists
+    //
     const existingUser = await User.findOne({ email });
     if (existingUser) {
       return res.status(400).json({ message: "User already exists with this email." });
@@ -16,7 +16,33 @@ export const register = async (req, res) => {
     // Hash the password
     const hashedPassword = await bcrypt.hash(password, 10);
     const user = await User.create({ name, email, password: hashedPassword, role });
-    res.status(201).json({ message: "User registered successfully", user });
+
+    // Generate a verification token
+    const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, { expiresIn: "1h" });
+
+    // Create a verification link
+    const verificationLink = `${process.env.BASE_URL}/verify-email/${token}`;
+
+    // Set up Nodemailer
+    const transporter = nodemailer.createTransport({
+      service: "Gmail",
+      auth: {
+        user: process.env.EMAIL_USER,
+        pass: process.env.EMAIL_PASS,
+      },
+    });
+
+    // Send verification email
+    const mailOptions = {
+      from: process.env.EMAIL_USER,
+      to: email,
+      subject: "Email Verification",
+      text: `Please verify your email by clicking the link: ${verificationLink}`,
+    };
+
+    await transporter.sendMail(mailOptions);
+
+    res.status(201).json({ message: "User registered successfully. A verification link has been sent to your email." });
   } catch (error) {
     // Customize error message for other potential errors
     res.status(400).json({ message: "Registration failed." });
@@ -53,7 +79,7 @@ export const forgotPassword = async (req, res) => {
     const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, { expiresIn: "1h" });
 
     // Create a reset link
-    const resetLink = `http://localhost:5000/reset-password/${token}`;
+    const resetLink = `${process.env.BASE_URL}/reset-password/${token}`;
 
     // Set up Nodemailer
     const transporter = nodemailer.createTransport({
@@ -98,48 +124,6 @@ export const resetPassword = async (req, res) => {
     await user.save();
 
     res.json({ message: "Password has been reset successfully" });
-  } catch (error) {
-    res.status(500).json({ message: "Something went wrong" });
-  }
-};
-
-// Verify Email
-export const verifyEmail = async (req, res) => {
-  const { email } = req.body;
-
-  try {
-    // Check if the user exists
-    const user = await User.findOne({ email });
-    if (!user) {
-      return res.status(404).json({ message: "User not found" });
-    }
-
-    // Generate a verification token
-    const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, { expiresIn: "1h" });
-
-    // Create a verification link
-    const verificationLink = `http://localhost:5000/verify-email/${token}`;
-
-    // Set up Nodemailer
-    const transporter = nodemailer.createTransport({
-      service: "gmail",
-      auth: {
-        user: process.env.EMAIL_USER,
-        pass: process.env.EMAIL_PASS,
-      },
-    });
-
-    // Send email
-    const mailOptions = {
-      from: process.env.EMAIL_USER,
-      to: email,
-      subject: "Email Verification",
-      text: `Please verify your email by clicking the link: ${verificationLink}`,
-    };
-
-    await transporter.sendMail(mailOptions);
-
-    res.json({ message: "Verification link sent to email" });
   } catch (error) {
     res.status(500).json({ message: "Something went wrong" });
   }
