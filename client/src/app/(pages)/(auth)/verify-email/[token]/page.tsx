@@ -22,7 +22,7 @@ export default function VerifyEmailPage() {
           description: data.message,
           duration: 1500,
         });
-        router.push("/login");
+        router.replace("/login");
       } else {
         const errorData = await response.json();
         toast({

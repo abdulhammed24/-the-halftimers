@@ -1,28 +1,39 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Link from "next/link";
 import Container from "./Container";
 import { Popover, PopoverTrigger, PopoverContent } from "./ui/popover";
 import { PopoverClose } from "@radix-ui/react-popover";
 import { Menu, X } from "lucide-react";
-
+import useAuth from "@/hooks/useAuth";
+import { useRouter } from "next/navigation";
 const Navbar = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const userFirstName = "John";
+  const { isAuthenticated } = useAuth();
+  const [userFirstName, setUserFirstName] = useState("");
+  const router = useRouter();
+
+  useEffect(() => {
+    const userData = localStorage.getItem("userData");
+    if (userData) {
+      const { userName } = JSON.parse(userData);
+      setUserFirstName(userName);
+    }
+  }, []);
 
   const toggleMobileMenu = () => {
     setIsMobileMenuOpen(!isMobileMenuOpen);
   };
 
   const handleLogin = () => {
-    setIsLoggedIn(true);
+    router.push("/login");
   };
 
   const handleLogout = () => {
-    console.log("User logged out");
-    setIsLoggedIn(false);
+    localStorage.removeItem("userData");
+    setUserFirstName("");
+    router.push("/login");
   };
 
   return (
@@ -30,14 +41,12 @@ const Navbar = () => {
       <Container>
         <div className="flex h-20 items-center justify-between">
           <div className="flex-shrink-0">
-            <div className="relative before:absolute before:left-0 before:top-1/2 before:h-1 before:w-5 before:-translate-y-1/2 before:bg-foreground before:content-['']">
-              <Link
-                href="/"
-                className="ml-7 text-lg font-bold italic lg:text-2xl"
-              >
-                The Halftimers
-              </Link>
-            </div>
+            <Link
+              href="/"
+              className="ml-7 text-lg font-bold italic lg:text-2xl"
+            >
+              The Halftimers
+            </Link>
           </div>
 
           <div className="hidden items-center space-x-8 md:flex">
@@ -48,7 +57,7 @@ const Navbar = () => {
               The Host
             </Link>
 
-            {isLoggedIn ? (
+            {isAuthenticated ? (
               <Popover>
                 <PopoverTrigger>
                   <span className="flex h-10 w-10 items-center justify-center rounded-full bg-primary font-semibold text-white">
@@ -81,7 +90,7 @@ const Navbar = () => {
 
           {/* Mobile Menu Button */}
           <div className="flex gap-5 md:hidden">
-            {isLoggedIn && (
+            {isAuthenticated && (
               <span className="flex h-10 w-10 items-center justify-center rounded-full bg-primary font-semibold text-white">
                 {userFirstName.charAt(0)}{" "}
               </span>
@@ -126,7 +135,7 @@ const Navbar = () => {
               The Host
             </Link>
 
-            {isLoggedIn ? (
+            {isAuthenticated ? (
               <button
                 className="text-left text-destructive"
                 onClick={() => {

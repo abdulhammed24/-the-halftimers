@@ -14,7 +14,11 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import Link from "next/link";
 import { Eye, EyeOff } from "lucide-react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useLoginMutation } from "@/rtk-query/features/authSlice";
+import { useToast } from "@/hooks/use-toast";
+import { useRouter } from "next/navigation";
+import useAuth from "@/hooks/useAuth";
 
 // Define the validation schema using Zod
 const loginSchema = z.object({
@@ -26,6 +30,10 @@ const loginSchema = z.object({
 type LoginFormData = z.infer<typeof loginSchema>;
 
 export default function LoginPage() {
+  const { toast } = useToast();
+  const router = useRouter();
+  const { isAuthenticated } = useAuth();
+  const [login, { isLoading }] = useLoginMutation();
   const {
     register,
     handleSubmit,
@@ -35,9 +43,37 @@ export default function LoginPage() {
   });
   const [showPassword, setShowPassword] = useState(false);
 
-  const onSubmit = (data: LoginFormData) => {
-    console.log(data);
-    // Handle login logic here
+  useEffect(() => {
+    if (isAuthenticated) {
+      router.replace("/");
+    }
+  }, [isAuthenticated, router]);
+
+  const onSubmit = async (data: LoginFormData) => {
+    try {
+      const response = await login(data).unwrap();
+      console.log(response);
+      const { token, name } = response;
+
+      const userData = { token, userName: name };
+      localStorage.setItem("userData", JSON.stringify(userData));
+
+      toast({
+        title: "Login successful!",
+        description: "Welcome back!",
+        duration: 1500,
+      });
+      router.replace("/");
+    } catch (error) {
+      const err = error as { data?: { message?: string } };
+      toast({
+        title: "Login failed",
+        description:
+          err.data?.message || "Invalid credentials. Please try again.",
+        duration: 1500,
+        variant: "destructive",
+      });
+    }
   };
 
   return (
@@ -77,8 +113,8 @@ export default function LoginPage() {
               </p>
             )}
           </div>
-          <Button type="submit" className="w-full">
-            Login
+          <Button type="submit" className="w-full" disabled={isLoading}>
+            {isLoading ? "Logging in..." : "Login"}
           </Button>
         </form>
       </CardContent>
