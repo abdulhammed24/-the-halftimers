@@ -17,8 +17,8 @@ export const register = async (req, res) => {
     const hashedPassword = await bcrypt.hash(password, 10);
     const user = await User.create({ name, email, password: hashedPassword, role });
 
-    // Generate a verification token
-    const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, { expiresIn: "1h" });
+    // Generate a verification token, expires after 24hours
+    const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, { expiresIn: "24h" });
 
     // Create a verification link
     const verificationLink = `${process.env.BASE_URL}/verify-email/${token}`;
@@ -54,7 +54,7 @@ export const login = async (req, res) => {
   try {
     const user = await User.findOne({ email });
     if (!user) {
-      return res.status(401).json({ message: "Invalid credentials" });
+      return res.status(401).json({ message: "Wrong Email or Password" });
     }
 
     // Check if the user is verified
@@ -64,7 +64,7 @@ export const login = async (req, res) => {
 
     // Check password
     if (!(await bcrypt.compare(password, user.password))) {
-      return res.status(401).json({ message: "Invalid credentials" });
+      return res.status(401).json({ message: "Wrong Password" });
     }
 
     // Generate JWT token
@@ -86,8 +86,8 @@ export const forgotPassword = async (req, res) => {
       return res.status(404).json({ message: "User not found" });
     }
 
-    // Generate a password reset token
-    const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, { expiresIn: "1h" });
+    // Generate a password reset token, expires in 15 minutes
+    const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, { expiresIn: "15m" });
 
     // Create a reset link
     const resetLink = `${process.env.BASE_URL}/reset-password/${token}`;

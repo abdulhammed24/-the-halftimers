@@ -37,6 +37,7 @@ export default function LoginPage() {
   const {
     register,
     handleSubmit,
+    reset,
     formState: { errors },
   } = useForm<LoginFormData>({
     resolver: zodResolver(loginSchema),
@@ -52,7 +53,7 @@ export default function LoginPage() {
   const onSubmit = async (data: LoginFormData) => {
     try {
       const response = await login(data).unwrap();
-      console.log(response);
+      // console.log(response);
       const { token, name } = response;
 
       const userData = { token, userName: name };
@@ -63,6 +64,7 @@ export default function LoginPage() {
         description: "Welcome back!",
         duration: 1500,
       });
+      reset();
       router.replace("/");
     } catch (error) {
       const err = error as { data?: { message?: string } };
@@ -113,7 +115,7 @@ export default function LoginPage() {
               </p>
             )}
           </div>
-          <Button type="submit" className="w-full" disabled={isLoading}>
+          <Button className="w-full" disabled={isLoading}>
             {isLoading ? "Logging in..." : "Login"}
           </Button>
         </form>

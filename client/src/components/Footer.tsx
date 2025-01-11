@@ -45,7 +45,7 @@ const Footer = () => {
             </Link>
           </div>
           <div>
-            <p className="text-base text-primary-foreground">
+            <p className="text-sm text-primary-foreground">
               © 2035 by The Halftimers
             </p>
           </div>

@@ -45,7 +45,7 @@ const PostDetails = () => {
             </h1>
           </div>
           <div className="my-10">
-            <p className="text-base font-bold italic">
+            <p className="text-sm font-bold italic">
               Create a blog post subtitle that summarizes your post in a few
               short, punchy sentences and entices your audience to continue
               reading.
@@ -65,7 +65,7 @@ const PostDetails = () => {
         </div>
 
         <div className="space-y-5 pt-10">
-          <p className="text-base lg:text-lg">
+          <p className="text-sm lg:text-lg">
             Welcome to your blog post. Use this space to connect with your
             readers and potential customers in a way that’s current and
             interesting. Think of it as an ongoing conversation where you can
@@ -86,7 +86,7 @@ const PostDetails = () => {
             </blockquote>
           </div>
 
-          <p className="text-base lg:text-lg">
+          <p className="text-sm lg:text-lg">
             Every layout comes with the latest social features built in. Readers
             will be able to easily share posts on social networks like Facebook
             and Twitter, view how many people have liked a post, made comments

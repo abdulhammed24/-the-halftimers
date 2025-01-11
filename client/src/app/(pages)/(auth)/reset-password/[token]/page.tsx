@@ -14,9 +14,15 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import Link from "next/link";
 import { Eye, EyeOff } from "lucide-react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useResetPasswordMutation } from "@/rtk-query/features/authSlice";
+import { useToast } from "@/hooks/use-toast";
+import { useRouter } from "next/navigation";
 
-// reset password zod schema
+interface Params {
+  token: string;
+}
+
 const resetPasswordSchema = z
   .object({
     newPassword: z
@@ -31,13 +37,20 @@ const resetPasswordSchema = z
     path: ["confirmPassword"],
   });
 
-// Define the type for form data
 type ResetPasswordFormData = z.infer<typeof resetPasswordSchema>;
 
-export default function ResetPasswordPage() {
+export default function ResetPasswordPage({
+  params,
+}: {
+  params: Promise<Params>;
+}) {
+  const { toast } = useToast();
+  const router = useRouter();
+  const [resetPassword, { isLoading }] = useResetPasswordMutation();
   const {
     register,
     handleSubmit,
+    reset,
     formState: { errors },
   } = useForm<ResetPasswordFormData>({
     resolver: zodResolver(resetPasswordSchema),
@@ -46,10 +59,41 @@ export default function ResetPasswordPage() {
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
-  const onSubmit = (data: ResetPasswordFormData) => {
-    console.log(data);
-    // Handle reset password logic here
-    // You would typically send the new password to your backend for processing
+  const [unwrappedParams, setUnwrappedParams] = useState<Params | null>(null);
+
+  useEffect(() => {
+    const fetchParams = async () => {
+      const resolvedParams = await params;
+      setUnwrappedParams(resolvedParams);
+    };
+    fetchParams();
+  }, [params]);
+
+  const onSubmit = async (data: ResetPasswordFormData) => {
+    if (!unwrappedParams) return;
+
+    try {
+      await resetPassword({
+        token: unwrappedParams.token,
+        newPassword: data.newPassword,
+      }).unwrap();
+      toast({
+        title: "Success!",
+        description: "Password has been reset successfully.",
+        duration: 1500,
+      });
+      reset();
+      router.replace("/login");
+    } catch (error) {
+      const err = error as { data?: { message?: string } };
+      toast({
+        title: "Error",
+        description:
+          err.data?.message || "Failed to reset password. Please try again.",
+        duration: 1500,
+        variant: "destructive",
+      });
+    }
   };
 
   return (
@@ -61,7 +105,6 @@ export default function ResetPasswordPage() {
         <form onSubmit={handleSubmit(onSubmit)}>
           <div className="mb-4">
             <Label htmlFor="newPassword">New Password</Label>
-
             <div className="relative">
               <Input
                 type={showPassword ? "text" : "password"}
@@ -85,7 +128,6 @@ export default function ResetPasswordPage() {
           </div>
           <div className="mb-4">
             <Label htmlFor="confirmPassword">Confirm Password</Label>
-
             <div className="relative">
               <Input
                 type={showConfirmPassword ? "text" : "password"}
@@ -107,8 +149,9 @@ export default function ResetPasswordPage() {
               </p>
             )}
           </div>
-          <Button type="submit" className="w-full">
-            Reset Password
+
+          <Button className="w-full" disabled={isLoading}>
+            {isLoading ? "Reseting..." : "Reset Password"}
           </Button>
         </form>
       </CardContent>

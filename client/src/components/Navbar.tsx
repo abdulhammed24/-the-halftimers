@@ -8,9 +8,10 @@ import { PopoverClose } from "@radix-ui/react-popover";
 import { Menu, X } from "lucide-react";
 import useAuth from "@/hooks/useAuth";
 import { useRouter } from "next/navigation";
+
 const Navbar = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const { isAuthenticated } = useAuth();
+  const { isAuthenticated, setIsAuthenticated } = useAuth();
   const [userFirstName, setUserFirstName] = useState("");
   const router = useRouter();
 
@@ -33,7 +34,7 @@ const Navbar = () => {
   const handleLogout = () => {
     localStorage.removeItem("userData");
     setUserFirstName("");
-    router.push("/login");
+    setIsAuthenticated(false);
   };
 
   return (
@@ -41,12 +42,14 @@ const Navbar = () => {
       <Container>
         <div className="flex h-20 items-center justify-between">
           <div className="flex-shrink-0">
-            <Link
-              href="/"
-              className="ml-7 text-lg font-bold italic lg:text-2xl"
-            >
-              The Halftimers
-            </Link>
+            <div className="relative before:absolute before:left-0 before:top-1/2 before:h-1 before:w-5 before:-translate-y-1/2 before:bg-foreground before:content-['']">
+              <Link
+                href="/"
+                className="ml-7 text-lg font-bold italic lg:text-2xl"
+              >
+                The Halftimers
+              </Link>
+            </div>
           </div>
 
           <div className="hidden items-center space-x-8 md:flex">
@@ -60,7 +63,7 @@ const Navbar = () => {
             {isAuthenticated ? (
               <Popover>
                 <PopoverTrigger>
-                  <span className="flex h-10 w-10 items-center justify-center rounded-full bg-primary font-semibold text-white">
+                  <span className="flex size-8 min-w-[2rem] items-center justify-center rounded-full bg-primary font-semibold text-white">
                     {userFirstName.charAt(0)}{" "}
                   </span>
                 </PopoverTrigger>
@@ -70,6 +73,15 @@ const Navbar = () => {
                   sideOffset={8}
                   className="w-44 rounded-md border p-2 shadow-lg"
                 >
+                  <div className="p-2">
+                    <span
+                      title={userFirstName}
+                      className="line-clamp-1 text-xs"
+                    >
+                      {userFirstName}
+                    </span>
+                  </div>
+
                   <PopoverClose
                     onClick={handleLogout}
                     className="w-full p-2 text-left text-sm text-destructive hover:bg-gray-100"
@@ -91,7 +103,7 @@ const Navbar = () => {
           {/* Mobile Menu Button */}
           <div className="flex gap-5 md:hidden">
             {isAuthenticated && (
-              <span className="flex h-10 w-10 items-center justify-center rounded-full bg-primary font-semibold text-white">
+              <span className="flex size-8 min-w-[2rem] items-center justify-center rounded-full bg-primary font-semibold text-white">
                 {userFirstName.charAt(0)}{" "}
               </span>
             )}
@@ -120,6 +132,14 @@ const Navbar = () => {
           </button>
 
           <div className="mt-8 flex flex-col space-y-6">
+            {isAuthenticated && (
+              <div className="flex items-center gap-2 text-xs">
+                <span className="flex size-8 min-w-[2rem] items-center justify-center rounded-full bg-primary font-semibold text-white">
+                  {userFirstName.charAt(0)}{" "}
+                </span>
+                <span>{userFirstName}</span>
+              </div>
+            )}
             <Link
               href="/blog"
               className="text-gray-800 hover:text-primary"

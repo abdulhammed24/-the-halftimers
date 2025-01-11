@@ -13,27 +13,47 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import Link from "next/link";
+import { useForgotPasswordMutation } from "@/rtk-query/features/authSlice";
+import { useToast } from "@/hooks/use-toast";
 
-// Define the validation schema using Zod
 const forgotPasswordSchema = z.object({
   email: z.string().email("Invalid email address"),
 });
 
-// Define the type for form data
 type ForgotPasswordFormData = z.infer<typeof forgotPasswordSchema>;
 
 export default function ForgotPasswordPage() {
+  const { toast } = useToast();
+  const [forgotPassword, { isLoading }] = useForgotPasswordMutation();
   const {
     register,
     handleSubmit,
+    reset,
     formState: { errors },
   } = useForm<ForgotPasswordFormData>({
     resolver: zodResolver(forgotPasswordSchema),
   });
 
-  const onSubmit = (data: ForgotPasswordFormData) => {
-    console.log(data);
-    // Handle forgot password logic here
+  const onSubmit = async (data: ForgotPasswordFormData) => {
+    try {
+      await forgotPassword(data).unwrap();
+      toast({
+        title: "Reset Link Sent!",
+        description: "Check your email for the reset link.",
+        duration: 1500,
+      });
+
+      reset();
+    } catch (error) {
+      const err = error as { data?: { message?: string } };
+      toast({
+        title: "Error",
+        description:
+          err.data?.message || "Failed to send reset link. Please try again.",
+        duration: 1500,
+        variant: "destructive",
+      });
+    }
   };
 
   return (
@@ -50,8 +70,9 @@ export default function ForgotPasswordPage() {
               <p className="text-sm text-destructive">{errors.email.message}</p>
             )}
           </div>
-          <Button type="submit" className="w-full">
-            Send Reset Link
+
+          <Button className="w-full" disabled={isLoading}>
+            {isLoading ? "Sending..." : "Send Reset Link"}
           </Button>
         </form>
       </CardContent>

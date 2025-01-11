@@ -43,7 +43,7 @@ const Hero = () => {
               </div>
 
               <div className="absolute left-1/2 top-1/2 w-full -translate-x-1/2 -translate-y-1/2 transform">
-                <p className="text-base font-bold text-primary-foreground lg:text-2xl">
+                <p className="text-sm font-bold text-primary-foreground lg:text-2xl">
                   Sports Blog & Podcast
                 </p>
               </div>

@@ -25,10 +25,7 @@ export default function CommentForm({
         className="w-full resize-none rounded-lg border p-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary"
         rows={isReply ? 2 : 3}
       />
-      <button
-        type="submit"
-        className="mt-2 rounded-lg bg-primary px-4 py-2 text-sm text-white hover:bg-primary-hover"
-      >
+      <button className="mt-2 rounded-lg bg-primary px-4 py-2 text-sm text-white hover:bg-primary-hover">
         {isReply ? "Reply" : "Comment"}
       </button>
     </form>
