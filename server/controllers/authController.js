@@ -44,7 +44,6 @@ export const register = async (req, res) => {
 
     res.status(201).json({ message: "User registered successfully. A verification link has been sent to your email." });
   } catch (error) {
-    // Customize error message for other potential errors
     res.status(400).json({ message: "Registration failed." });
   }
 };
