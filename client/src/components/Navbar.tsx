@@ -6,8 +6,8 @@ import Container from "./Container";
 import { Popover, PopoverTrigger, PopoverContent } from "./ui/popover";
 import { PopoverClose } from "@radix-ui/react-popover";
 import { Menu, X } from "lucide-react";
-import useAuth from "@/hooks/useAuth";
 import { useRouter } from "next/navigation";
+import useAuth from "@/hooks/useAuth";
 
 const Navbar = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);

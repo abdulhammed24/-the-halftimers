@@ -2,12 +2,19 @@ import Blog from "../models/Blog.js";
 
 // Create a new blog post
 export const createBlogPost = async (req, res) => {
-  const { imageSrc, altText, readTime, title, description, category, slug } = req.body;
+  const { imageSrc, readTime, title, description, category, slug } = req.body;
 
   try {
+    // Check if a blog post with the same slug already exists
+    const existingPost = await Blog.findOne({ slug });
+    if (existingPost) {
+      return res.status(400).json({ message: "A blog post with this slug already exists." });
+    }
+
+    // Create the new blog post
     const blogPost = await Blog.create({
       imageSrc,
-      altText,
+
       author: req.user.id,
       readTime,
       title,
@@ -55,12 +62,12 @@ export const getBlogBySlug = async (req, res) => {
 // Edit a blog post
 export const editBlogPost = async (req, res) => {
   const { slug } = req.params;
-  const { imageSrc, altText, readTime, title, description, category } = req.body;
+  const { imageSrc, readTime, title, description, category } = req.body;
 
   try {
     const blogPost = await Blog.findOneAndUpdate(
       { slug },
-      { imageSrc, altText, readTime, title, description, category },
+      { imageSrc, readTime, title, description, category },
       { new: true }
     );
 
