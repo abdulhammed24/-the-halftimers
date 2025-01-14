@@ -20,7 +20,7 @@ const Hero: React.FC<HeroProps> = ({ title }) => {
               placeholder={`data:image/svg+xml;base64,${toBase64(shimmer(700, 475))}`}
             />
           </div>
-          <div className="pb-12 pt-12 max-md:px-6 md:pb-28 md:pl-32">
+          <div className="z-20 pb-12 pt-12 max-md:px-6 md:pb-28 md:pl-32">
             <p className="text-3xl font-bold italic text-primary-foreground lg:text-4xl">
               {title}
             </p>

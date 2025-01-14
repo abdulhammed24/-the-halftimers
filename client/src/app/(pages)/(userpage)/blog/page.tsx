@@ -8,6 +8,7 @@ const BlogPage = () => {
   return (
     <>
       <Hero title="Blog" />
+      {/* <Suspense fallback={<SkeletonBlogCard/>}></Suspense> */}
       <Suspense fallback={<div>Loading Blog Content...</div>}>
         <BlogContent />
       </Suspense>

@@ -3,23 +3,37 @@
 import postsData from "@/data.json";
 import { useSearchParams } from "next/navigation";
 import Link from "next/link";
+import { useState, useEffect } from "react";
 import BlogCard from "@/components/BlogCard";
 
 const BlogContent = () => {
   const posts = postsData.posts;
   const searchParams = useSearchParams();
-  const category = searchParams.get("category")?.toLowerCase() || "all posts";
+  const initialCategory =
+    searchParams.get("category")?.toLowerCase() || "all posts";
 
-  const filteredPosts =
-    category === "all posts"
-      ? posts
-      : posts.filter((post) => post.category.toLowerCase() === category);
+  // Use state to manage category and filtered posts
+  const [category, setCategory] = useState(initialCategory);
+  const [filteredPosts, setFilteredPosts] = useState(posts);
+
+  useEffect(() => {
+    const newFilteredPosts =
+      category === "all posts"
+        ? posts
+        : posts.filter((post) => post.category.toLowerCase() === category);
+    setFilteredPosts(newFilteredPosts);
+  }, [category, posts]);
+
+  useEffect(() => {
+    setCategory(initialCategory);
+  }, [initialCategory]);
 
   const handleCategoryChange = (
     event: React.ChangeEvent<HTMLSelectElement>,
   ) => {
     const selectedCategory = event.target.value;
-    window.location.href = `/blog?category=${selectedCategory}`;
+    setCategory(selectedCategory);
+    window.history.pushState({}, "", `/blog?category=${selectedCategory}`);
   };
 
   return (

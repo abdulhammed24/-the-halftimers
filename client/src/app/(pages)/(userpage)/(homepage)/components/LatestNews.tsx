@@ -25,7 +25,7 @@ const LatestNews: React.FC = () => {
               href="/blog"
               className="flex h-10 w-fit items-center border border-foreground px-5"
             >
-              <span className="text-sm text-foreground">Listen Now</span>
+              <span className="text-sm text-foreground">All Posts</span>
               <div>
                 <ChevronRight className="text-foreground" />
               </div>
