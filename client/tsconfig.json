@@ -29,7 +29,7 @@
     ".next/types/**/*.ts",
     "src/react-query/QueryProvider.js",
     "src/react-query/api/auth.ts",
-    "src/rtk-query/store.js"
+    "src/rtk-query/store.ts"
   ],
   "exclude": ["node_modules"]
 }

@@ -17,7 +17,7 @@ import { Eye, EyeOff } from "lucide-react";
 import { useState } from "react";
 import { useToast } from "@/hooks/use-toast";
 import { useRouter } from "next/navigation";
-import { useRegisterMutation } from "@/rtk-query/features/authSlice";
+import { useRegisterMutation } from "@/rtk-query/features/authApi";
 
 //
 const registrationSchema = z.object({

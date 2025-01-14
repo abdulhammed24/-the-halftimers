@@ -1,27 +1,27 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import Link from "next/link";
 import Container from "./Container";
 import { Popover, PopoverTrigger, PopoverContent } from "./ui/popover";
 import { PopoverClose } from "@radix-ui/react-popover";
 import { Menu, X } from "lucide-react";
 import { useRouter } from "next/navigation";
-import useAuth from "@/hooks/useAuth";
+import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "@/rtk-query/store";
+import { logout } from "@/rtk-query/features/authSlice";
+import { useToast } from "@/hooks/use-toast";
+import { useLogoutMutation } from "@/rtk-query/features/authApi";
 
 const Navbar = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const { isAuthenticated, setIsAuthenticated } = useAuth();
-  const [userFirstName, setUserFirstName] = useState("");
   const router = useRouter();
+  const { toast } = useToast();
+  const [logoutApi] = useLogoutMutation();
+  const dispatch = useDispatch();
 
-  useEffect(() => {
-    const userData = localStorage.getItem("userData");
-    if (userData) {
-      const { userName } = JSON.parse(userData);
-      setUserFirstName(userName);
-    }
-  }, []);
+  const { userInfo } = useSelector((state: RootState) => state.auth) || {};
+  const userFirstName = userInfo?.name?.split(" ")[0] || "User";
 
   const toggleMobileMenu = () => {
     setIsMobileMenuOpen(!isMobileMenuOpen);
@@ -31,10 +31,26 @@ const Navbar = () => {
     router.push("/login");
   };
 
-  const handleLogout = () => {
-    localStorage.removeItem("userData");
-    setUserFirstName("");
-    setIsAuthenticated(false);
+  const handleLogout = async () => {
+    try {
+      await logoutApi();
+      dispatch(logout());
+
+      toast({
+        title: "Logout successful!",
+        description: "Kindly, Login back",
+        duration: 1500,
+      });
+    } catch (error) {
+      const err = error as { data?: { message?: string } };
+
+      toast({
+        title: "Logout failed",
+        description: err.data?.message || " Please try again.",
+        duration: 1500,
+        variant: "destructive",
+      });
+    }
   };
 
   return (
@@ -60,11 +76,11 @@ const Navbar = () => {
               The Host
             </Link>
 
-            {isAuthenticated ? (
+            {userInfo ? (
               <Popover>
                 <PopoverTrigger>
                   <span className="flex size-8 min-w-[2rem] items-center justify-center rounded-full bg-primary font-semibold text-white">
-                    {userFirstName.charAt(0)}{" "}
+                    {userFirstName.charAt(0)}
                   </span>
                 </PopoverTrigger>
 
@@ -74,10 +90,7 @@ const Navbar = () => {
                   className="w-44 rounded-md border p-2 shadow-lg"
                 >
                   <div className="p-2">
-                    <span
-                      title={userFirstName}
-                      className="line-clamp-1 text-xs"
-                    >
+                    <span className="line-clamp-1 text-xs">
                       {userFirstName}
                     </span>
                   </div>
@@ -102,9 +115,9 @@ const Navbar = () => {
 
           {/* Mobile Menu Button */}
           <div className="flex gap-5 md:hidden">
-            {isAuthenticated && (
+            {userInfo && (
               <span className="flex size-8 min-w-[2rem] items-center justify-center rounded-full bg-primary font-semibold text-white">
-                {userFirstName.charAt(0)}{" "}
+                {userFirstName.charAt(0)}
               </span>
             )}
             <button
@@ -132,10 +145,10 @@ const Navbar = () => {
           </button>
 
           <div className="mt-8 flex flex-col space-y-6">
-            {isAuthenticated && (
+            {userInfo && (
               <div className="flex items-center gap-2 text-xs">
                 <span className="flex size-8 min-w-[2rem] items-center justify-center rounded-full bg-primary font-semibold text-white">
-                  {userFirstName.charAt(0)}{" "}
+                  {userFirstName.charAt(0)}
                 </span>
                 <span>{userFirstName}</span>
               </div>
@@ -155,7 +168,7 @@ const Navbar = () => {
               The Host
             </Link>
 
-            {isAuthenticated ? (
+            {userInfo ? (
               <button
                 className="text-left text-destructive"
                 onClick={() => {

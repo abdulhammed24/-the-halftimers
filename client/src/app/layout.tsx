@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
 import { Poppins } from "next/font/google";
 import "./globals.css";
-import ReduxProvider from "@/rtk-query/ReduxProvider.js";
 import { Toaster } from "@/components/ui/toaster";
+import ReduxProvider from "@/rtk-query/ReduxProvider";
 
 const poppinsFont = Poppins({
   variable: "--font-poppins",

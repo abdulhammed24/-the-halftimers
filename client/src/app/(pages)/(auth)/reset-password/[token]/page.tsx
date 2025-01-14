@@ -15,7 +15,7 @@ import { Label } from "@/components/ui/label";
 import Link from "next/link";
 import { Eye, EyeOff } from "lucide-react";
 import { useEffect, useState } from "react";
-import { useResetPasswordMutation } from "@/rtk-query/features/authSlice";
+import { useResetPasswordMutation } from "@/rtk-query/features/authApi";
 import { useToast } from "@/hooks/use-toast";
 import { useRouter } from "next/navigation";
 

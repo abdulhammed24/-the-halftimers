@@ -13,7 +13,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import Link from "next/link";
-import { useForgotPasswordMutation } from "@/rtk-query/features/authSlice";
+import { useForgotPasswordMutation } from "@/rtk-query/features/authApi";
 import { useToast } from "@/hooks/use-toast";
 
 const forgotPasswordSchema = z.object({
