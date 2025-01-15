@@ -17,7 +17,7 @@ const blogSchema = new mongoose.Schema(
     views: { type: Number, default: 0 },
     comments: [commentSchema],
     likes: { type: Number, default: 0 },
-    category: { type: String, required: true },
+    category: { type: [String], required: true },
     slug: { type: String, required: true, unique: true },
   },
   { timestamps: true }
