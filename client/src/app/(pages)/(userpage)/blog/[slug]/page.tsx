@@ -32,16 +32,16 @@ export async function generateStaticParams() {
   ).then((res) => res.json());
 
   return posts.map((post) => ({
-    slug: post.slug,
+    slug: String(post.slug),
   }));
 }
 
 export async function generateMetadata({
   params,
 }: {
-  params: { slug: string };
+  params: Promise<{ slug: string }>;
 }) {
-  const { slug } = params;
+  const { slug } = await params;
   const { post } = await fetchPostData(slug);
 
   return {
@@ -53,9 +53,9 @@ export async function generateMetadata({
 export default async function PostPage({
   params,
 }: {
-  params: { slug: string };
+  params: Promise<{ slug: string }>;
 }) {
-  const { slug } = params;
+  const { slug } = await params;
   const { post, recentPosts } = await fetchPostData(slug);
 
   return (
