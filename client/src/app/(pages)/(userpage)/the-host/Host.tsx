@@ -24,10 +24,15 @@ const Host = () => {
               <div className="space-y-3">
                 <p className="text-xl font-bold italic">Abdulhammed</p>
                 <p className="text-sm text-gray-600">
-                  Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                  Repellat dolore sit beatae tempora laudantium iusto quis
-                  minima quisquam, nobis reprehenderit. Corporis rerum
-                  consectetur ut laudantium adipisci facere accusantium nam non?
+                  <div className="mb-10">
+                    <p className="text-sm">
+                      I'm a paragraph. Click here to add your own text and edit
+                      me. It’s easy. Just click “Edit Text” or double click me
+                      to add your own content and make changes to the font. I’m
+                      a great place for you to tell a story and let your users
+                      know a little more about you.
+                    </p>
+                  </div>
                 </p>
               </div>
             </div>
