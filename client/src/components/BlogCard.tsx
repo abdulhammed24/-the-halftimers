@@ -11,7 +11,7 @@ interface BlogCardProps {
 
 const BlogCard: React.FC<BlogCardProps> = ({ post }) => {
   return (
-    <div className="grid md:grid-cols-2">
+    <div className="grid hover:shadow-md md:grid-cols-2">
       <div className="relative overflow-hidden pt-[60%]">
         <Image
           src={post.imageSrc}
