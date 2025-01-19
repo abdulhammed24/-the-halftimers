@@ -31,7 +31,8 @@ const BlogCard: React.FC<BlogCardProps> = ({ post }) => {
             <CircleUser />
           </span>
           <div>
-            <span>{post.author.name}</span>
+            {/* <span>{post.author.name}</span> */}
+            <span>Admin</span>
             <div className="flex items-center">
               <span>{formatDate(post.createdAt)}</span>
               <span className="mx-2 block size-[2px] rounded-full bg-foreground" />
