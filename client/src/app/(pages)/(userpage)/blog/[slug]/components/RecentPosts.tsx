@@ -1,4 +1,3 @@
-// components/RecentPosts.tsx
 import Container from "@/components/Container";
 import { Eye, Heart, MessageSquare } from "lucide-react";
 import Image from "next/image";

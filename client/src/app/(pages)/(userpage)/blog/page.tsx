@@ -1,19 +1,14 @@
-import { Suspense } from "react";
-import Hero from "../../../../components/Hero";
-import dynamic from "next/dynamic";
+import { fetchPosts } from "@/utils/fetchPosts";
+import BlogContent from "./BlogContent";
+import Hero from "@/components/Hero";
 
-const BlogContent = dynamic(() => import("./BlogContent"));
+export default async function BlogPage() {
+  const posts = await fetchPosts();
 
-const BlogPage = () => {
   return (
     <>
       <Hero title="Blog" />
-      {/* <Suspense fallback={<SkeletonBlogCard/>}></Suspense> */}
-      <Suspense fallback={<div>Loading Blog Content...</div>}>
-        <BlogContent />
-      </Suspense>
+      <BlogContent posts={posts} />
     </>
   );
-};
-
-export default BlogPage;
+}

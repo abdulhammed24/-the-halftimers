@@ -13,8 +13,14 @@ import SharePopover from "./SharePopover";
 import { useState } from "react";
 import * as Tooltip from "@radix-ui/react-tooltip";
 import Container from "@/components/Container";
+import { BlogPost } from "@/types/blog";
+import { formatDate } from "@/utils/formatDate";
 
-const PostDetails = () => {
+interface PostDetailsProps {
+  post: BlogPost;
+}
+
+const PostDetails = ({ post }: PostDetailsProps) => {
   const [copied, setCopied] = useState(false);
 
   return (
@@ -29,9 +35,9 @@ const PostDetails = () => {
               <div className="flex flex-wrap items-center text-balance text-sm">
                 <span>Admin</span>
                 <span className="mx-2 block size-[2px] rounded-full bg-foreground" />{" "}
-                <span>Jun 3, 2023</span>{" "}
+                <span>{formatDate(post.createdAt)}</span>{" "}
                 <span className="mx-2 block size-[2px] rounded-full bg-foreground" />{" "}
-                <span>2 min read</span>
+                <span>{post.readTime}</span>
               </div>
             </div>
           </div>
@@ -41,31 +47,28 @@ const PostDetails = () => {
         <div className="mt-10">
           <div>
             <h1 className="text-4xl font-bold italic text-primary md:text-6xl">
-              Our Top Rookies for the Upcoming Season
+              {post.title}
             </h1>
           </div>
           <div className="my-10">
-            <p className="text-sm font-bold italic">
-              Create a blog post subtitle that summarizes your post in a few
-              short, punchy sentences and entices your audience to continue
-              reading.
-            </p>
+            <p className="text-sm font-bold italic">{post.subTitle}</p>
           </div>
           <div>
             <div className="relative overflow-hidden pt-[60%]">
               <Image
-                src="https://static.wixstatic.com/media/c22c23_2b30616ff13e440399065674ee385e7d~mv2.jpg/v1/fill/w_740,h_416,al_c,q_80,usm_0.66_1.00_0.01,enc_auto/c22c23_2b30616ff13e440399065674ee385e7d~mv2.jpg"
+                src={post.imageSrc}
                 alt="post image"
                 fill
                 className="object-cover"
                 placeholder={`data:image/svg+xml;base64,${toBase64(shimmer(700, 475))}`}
+                sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
               />
             </div>
           </div>
         </div>
 
         <div className="space-y-5 pt-10">
-          <p className="text-sm lg:text-lg">
+          {/* <p className="text-sm lg:text-lg">
             Welcome to your blog post. Use this space to connect with your
             readers and potential customers in a way that’s current and
             interesting. Think of it as an ongoing conversation where you can
@@ -107,7 +110,9 @@ const PostDetails = () => {
                 deleniti temporibus obcaecati voluptatum aperiam eveniet."
               </em>
             </blockquote>
-          </div>
+          </div> */}
+
+          <div dangerouslySetInnerHTML={{ __html: post.description }}></div>
         </div>
 
         <div className="mt-14 border-y border-y-foreground/20 py-5">
@@ -145,10 +150,10 @@ const PostDetails = () => {
             </div>
             <div>
               <Link
-                href="/blog?category=basketball"
+                href={`/blog?category=${post.category}`}
                 className="text-sm hover:text-primary"
               >
-                Basketball
+                {post.category}
               </Link>
             </div>
           </div>
@@ -157,14 +162,14 @@ const PostDetails = () => {
         <div className="flex items-center justify-between py-5 text-sm">
           <div className="flex">
             <div className="flex flex-wrap items-center gap-5">
-              <span>70 views</span>
-              <span>0 comments</span>
+              <span>{post.views} views</span>
+              <span>{post.comments.length} comments</span>
             </div>
           </div>
           <div className="flex items-center justify-end">
             <button>
               <span className="flex items-center gap-2">
-                <span>2</span>
+                <span>{post.likes}</span>
                 <span>
                   <Heart size={14} />
                 </span>

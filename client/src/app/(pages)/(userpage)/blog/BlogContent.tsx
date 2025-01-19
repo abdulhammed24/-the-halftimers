@@ -1,26 +1,30 @@
 "use client";
 
-import postsData from "@/data.json";
+import { useState, useEffect, Suspense } from "react";
 import { useSearchParams } from "next/navigation";
 import Link from "next/link";
-import { useState, useEffect } from "react";
 import BlogCard from "@/components/BlogCard";
+import { BlogPost } from "@/types/blog";
+import { Skeleton } from "@/components/ui/skeleton";
 
-const BlogContent = () => {
-  const posts = postsData.posts;
+interface BlogContentProps {
+  posts: BlogPost[];
+}
+
+const BlogContent: React.FC<BlogContentProps> = ({ posts }) => {
+  const [filteredPosts, setFilteredPosts] = useState<BlogPost[]>(posts);
   const searchParams = useSearchParams();
   const initialCategory =
     searchParams.get("category")?.toLowerCase() || "all posts";
-
-  // Use state to manage category and filtered posts
   const [category, setCategory] = useState(initialCategory);
-  const [filteredPosts, setFilteredPosts] = useState(posts);
 
   useEffect(() => {
     const newFilteredPosts =
       category === "all posts"
         ? posts
-        : posts.filter((post) => post.category.toLowerCase() === category);
+        : posts.filter((post) =>
+            post.category.some((cat) => cat.toLowerCase() === category),
+          );
     setFilteredPosts(newFilteredPosts);
   }, [category, posts]);
 
@@ -39,41 +43,17 @@ const BlogContent = () => {
   return (
     <section className="relative z-20 xl:-mt-[50px]">
       <div className="mx-auto bg-primary-foreground p-6 lg:w-[calc(100%-160px-160px)] lg:p-10">
+        {/* Desktop Navigation */}
         <div className="mb-6 hidden flex-wrap lg:flex">
-          <Link
-            href="/blog"
-            className={`px-4 py-2 text-sm font-bold italic ${category === "all posts" ? "bg-primary text-white" : "text-foreground"}`}
-          >
-            All Posts
-          </Link>
-
-          <Link
-            href="/blog?category=featured"
-            className={`px-4 py-2 text-sm font-bold italic ${category === "featured" ? "bg-primary text-white" : "text-foreground"}`}
-          >
-            Featured
-          </Link>
-
-          <Link
-            href="/blog?category=football"
-            className={`px-4 py-2 text-sm font-bold italic ${category === "football" ? "bg-primary text-white" : "text-foreground"}`}
-          >
-            Football
-          </Link>
-
-          <Link
-            href="/blog?category=baseball"
-            className={`px-4 py-2 text-sm font-bold italic ${category === "baseball" ? "bg-primary text-white" : "text-foreground"}`}
-          >
-            Baseball
-          </Link>
-
-          <Link
-            href="/blog?category=basketball"
-            className={`px-4 py-2 text-sm font-bold italic ${category === "basketball" ? "bg-primary text-white" : "text-foreground"}`}
-          >
-            Basketball
-          </Link>
+          {["all posts", "featured", "football", "other sport"].map((cat) => (
+            <Link
+              href={`/blog?category=${cat}`}
+              key={cat}
+              className={`px-4 py-2 text-sm font-bold italic ${category === cat ? "bg-primary text-white" : "text-foreground"}`}
+            >
+              {cat.charAt(0).toUpperCase() + cat.slice(1)}
+            </Link>
+          ))}
         </div>
 
         {/* Mobile Navigation */}
@@ -86,21 +66,47 @@ const BlogContent = () => {
             <option value="all posts">All Posts</option>
             <option value="featured">Featured</option>
             <option value="football">Football</option>
-            <option value="baseball">Baseball</option>
-            <option value="basketball">Basketball</option>
+            <option value="other sport">Other Sport</option>
           </select>
         </div>
 
+        {/* Blog Cards with Suspense */}
         <div className="flex flex-col items-center">
           <div className="mb-12 w-full space-y-10">
-            {filteredPosts.map((post, index) => (
-              <BlogCard key={index} {...post} />
-            ))}
+            <Suspense fallback={<LatestNewsSkeleton />}>
+              {filteredPosts.map((post) => (
+                <BlogCard key={post._id} post={post} />
+              ))}
+            </Suspense>
           </div>
         </div>
       </div>
     </section>
   );
 };
+
+function LatestNewsSkeleton() {
+  return (
+    <section className="py-10">
+      <div className="container mx-auto">
+        <div className="lg:p-10">
+          <Skeleton className="mb-10 h-8 w-48" />
+          <div className="space-y-10">
+            {[...Array(3)].map((_, index) => (
+              <div key={index} className="grid gap-4 md:grid-cols-2">
+                <Skeleton className="h-64 w-full" />
+                <div className="space-y-4">
+                  <Skeleton className="h-4 w-3/4" />
+                  <Skeleton className="h-4 w-1/2" />
+                  <Skeleton className="h-20 w-full" />
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
 
 export default BlogContent;

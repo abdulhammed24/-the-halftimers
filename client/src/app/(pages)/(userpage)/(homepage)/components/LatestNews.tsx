@@ -1,12 +1,14 @@
 import BlogCard from "@/components/BlogCard";
 import Container from "@/components/Container";
-import postsData from "@/data.json";
+import { BlogPost } from "@/types/blog";
 import { ChevronRight } from "lucide-react";
 import Link from "next/link";
 
-const LatestNews: React.FC = () => {
-  const posts = postsData.posts;
+interface LatestNewsProps {
+  posts: BlogPost[];
+}
 
+export default function LatestNews({ posts }: LatestNewsProps) {
   return (
     <section className="py-10">
       <Container width="large">
@@ -16,11 +18,10 @@ const LatestNews: React.FC = () => {
           </div>
           <div className="flex flex-col items-center">
             <div className="mb-12 w-full space-y-10">
-              {posts.map((post, index) => (
-                <BlogCard key={index} {...post} />
+              {posts.slice(0, 5).map((post) => (
+                <BlogCard key={post._id} post={post} />
               ))}
             </div>
-
             <Link
               href="/blog"
               className="flex h-10 w-fit items-center border border-foreground px-5"
@@ -35,6 +36,4 @@ const LatestNews: React.FC = () => {
       </Container>
     </section>
   );
-};
-
-export default LatestNews;
+}

@@ -18,7 +18,8 @@ router.post("/", authenticate, isAdmin, createBlogPost);
 router.get("/", getAllBlogPosts);
 
 // get a blog post by slug (authenticated users)
-router.get("/:slug", authenticate, getBlogBySlug);
+// router.get("/:slug", authenticate, getBlogBySlug);
+router.get("/:slug", getBlogBySlug);
 
 // edit a blog post (only admin can edit)
 router.put("/:slug", authenticate, isAdmin, editBlogPost);

@@ -20,7 +20,7 @@ const Navbar = () => {
   const [logoutApi] = useLogoutMutation();
   const dispatch = useDispatch();
 
-  const { userInfo } = useSelector((state: RootState) => state.auth) || {};
+  const { userInfo } = useSelector((state: RootState) => state.auth);
   const userFirstName = userInfo?.name?.split(" ")[0] || "User";
 
   const toggleMobileMenu = () => {

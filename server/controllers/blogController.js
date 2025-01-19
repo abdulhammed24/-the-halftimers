@@ -2,7 +2,7 @@ import Blog from "../models/Blog.js";
 
 // Create a new blog post
 export const createBlogPost = async (req, res) => {
-  const { imageSrc, readTime, title, description, category, slug } = req.body;
+  const { imageSrc, readTime, title, subTitle, description, category, slug } = req.body;
 
   try {
     // Check if a blog post with the same slug already exists
@@ -14,10 +14,10 @@ export const createBlogPost = async (req, res) => {
     // Create the new blog post
     const blogPost = await Blog.create({
       imageSrc,
-
       author: req.user.id,
       readTime,
       title,
+      subTitle,
       description,
       category,
       slug,

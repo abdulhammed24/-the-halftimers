@@ -1,9 +1,12 @@
 import BlogCard from "@/components/BlogCard";
 import Container from "@/components/Container";
-import postsData from "@/data.json";
+import { BlogPost } from "@/types/blog";
 
-const Featured: React.FC = () => {
-  const posts = postsData.posts;
+interface FeaturedProps {
+  posts: BlogPost[];
+}
+
+export default function Featured({ posts }: FeaturedProps) {
   const featuredPost = posts[posts.length - 1];
 
   return (
@@ -13,11 +16,9 @@ const Featured: React.FC = () => {
           <div className="relative mb-5 before:absolute before:left-0 before:top-1/2 before:h-px before:w-10 before:-translate-y-1/2 before:bg-foreground before:content-['']">
             <h2 className="ml-14 text-sm font-bold italic">Featured</h2>
           </div>
-          <BlogCard {...featuredPost} />
+          <BlogCard post={featuredPost} />
         </div>
       </Container>
     </section>
   );
-};
-
-export default Featured;
+}
