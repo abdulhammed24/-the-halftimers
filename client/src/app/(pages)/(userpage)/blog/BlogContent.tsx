@@ -45,7 +45,7 @@ const BlogContent: React.FC<BlogContentProps> = ({ posts }) => {
       <div className="mx-auto bg-primary-foreground p-6 lg:w-[calc(100%-160px-160px)] lg:p-10">
         {/* Desktop Navigation */}
         <div className="mb-6 hidden flex-wrap lg:flex">
-          {["all posts", "featured", "football", "other sport"].map((cat) => (
+          {["all posts", "featured", "football", "other sports"].map((cat) => (
             <Link
               href={`/blog?category=${cat}`}
               key={cat}
@@ -66,7 +66,7 @@ const BlogContent: React.FC<BlogContentProps> = ({ posts }) => {
             <option value="all posts">All Posts</option>
             <option value="featured">Featured</option>
             <option value="football">Football</option>
-            <option value="other sport">Other Sport</option>
+            <option value="other sports">Other Sports</option>
           </select>
         </div>
 
