@@ -46,7 +46,7 @@ const Podcast = () => {
                   </Tooltip.Trigger>
                   <Tooltip.Portal>
                     <Tooltip.Content
-                      className="z-50 rounded-md bg-black px-2 py-1 text-sm text-white"
+                      className="z-50 rounded-md bg-white px-2 py-1 text-sm text-black"
                       side="top"
                       align="center"
                       sideOffset={8}
