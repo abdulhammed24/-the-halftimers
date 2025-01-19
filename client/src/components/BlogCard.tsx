@@ -40,14 +40,15 @@ const BlogCard: React.FC<BlogCardProps> = ({ post }) => {
           </div>
         </div>
         <div className="mb-6 space-y-3">
-          <h3 className="text-2xl font-bold italic text-primary">
+          <h3 className="text-2xl font-bold italic text-primary lg:text-4xl">
             {post.title}
           </h3>
-          <div className="line-clamp-3 text-xs font-normal">
+          <div className="line-clamp-3 text-xs font-normal lg:text-base">
             {post.subTitle}
           </div>
         </div>
-        <div className="mt-3 pt-3">
+
+        {/* <div className="mt-3 pt-3">
           <span className="mb-4 block h-[1px] bg-foreground/20"></span>
           <div>
             <div className="flex items-center justify-between text-xs">
@@ -69,7 +70,7 @@ const BlogCard: React.FC<BlogCardProps> = ({ post }) => {
               </div>
             </div>
           </div>
-        </div>
+        </div> */}
       </Link>
     </div>
   );

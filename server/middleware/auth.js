@@ -9,7 +9,7 @@ export const authenticate = (req, res, next) => {
 
   jwt.verify(token, process.env.JWT_SECRET, (err, user) => {
     if (err) {
-      return res.status(403).json({ message: "Forbidden" });
+      return res.status(403).json({ message: "Session expired. Please log in again" });
     }
     req.user = user;
     next();

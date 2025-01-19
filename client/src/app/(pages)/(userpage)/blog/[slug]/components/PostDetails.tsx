@@ -159,7 +159,7 @@ const PostDetails = ({ post }: PostDetailsProps) => {
           </div>
         </div>
 
-        <div className="flex items-center justify-between py-5 text-sm">
+        {/* <div className="flex items-center justify-between py-5 text-sm">
           <div className="flex">
             <div className="flex flex-wrap items-center gap-5">
               <span>{post.views} views</span>
@@ -176,7 +176,7 @@ const PostDetails = ({ post }: PostDetailsProps) => {
               </span>
             </button>
           </div>
-        </div>
+        </div> */}
       </Container>
     </section>
   );
