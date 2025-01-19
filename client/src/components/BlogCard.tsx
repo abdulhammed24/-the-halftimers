@@ -48,7 +48,7 @@ const BlogCard: React.FC<BlogCardProps> = ({ post }) => {
           </div>
         </div>
 
-        {/* <div className="mt-3 pt-3">
+        <div className="mt-3 pt-3">
           <span className="mb-4 block h-[1px] bg-foreground/20"></span>
           <div>
             <div className="flex items-center justify-between text-xs">
@@ -70,7 +70,7 @@ const BlogCard: React.FC<BlogCardProps> = ({ post }) => {
               </div>
             </div>
           </div>
-        </div> */}
+        </div>
       </Link>
     </div>
   );

@@ -31,9 +31,9 @@ export default function RecentPosts({ posts }: { posts: BlogPost[] }) {
                     {post.title}
                   </h3>
 
-                  {/* <span className="my-4 block h-[1px] bg-foreground/20"></span> */}
+                  <span className="my-4 block h-[1px] bg-foreground/20"></span>
 
-                  {/* <div className="flex items-center justify-between gap-3 text-sm text-gray-500">
+                  <div className="flex items-center justify-between gap-3 text-sm text-gray-500">
                     <div className="flex items-center gap-3">
                       <div className="flex items-center gap-2">
                         <Eye size={16} />
@@ -50,7 +50,7 @@ export default function RecentPosts({ posts }: { posts: BlogPost[] }) {
                         <Heart size={16} className="text-primary" />
                       </button>
                     </div>
-                  </div> */}
+                  </div>
                 </div>
               </div>
             </Link>
