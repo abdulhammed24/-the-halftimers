@@ -14,7 +14,7 @@ const BlogCard: React.FC<BlogCardProps> = ({ post }) => {
     <div className="grid md:grid-cols-2">
       <div className="relative overflow-hidden pt-[60%]">
         <Image
-          src={post.imageSrc || "/placeholder.svg"}
+          src={post.imageSrc}
           alt={post.title}
           fill
           className="object-cover"
