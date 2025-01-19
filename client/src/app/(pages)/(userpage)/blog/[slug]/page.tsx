@@ -1,12 +1,9 @@
+import { BlogPost } from "@/types/blog";
 import CommentsSection from "./components/Comments/CommentsSection";
 import PostDetails from "./components/PostDetails";
 
-interface Post {
-  slug: string;
-}
-
 export async function generateStaticParams() {
-  const posts: Post[] = await fetch(
+  const posts: BlogPost[] = await fetch(
     `${process.env.NEXT_PUBLIC_BASE_URL}/blog`,
   ).then((res) => res.json());
 
