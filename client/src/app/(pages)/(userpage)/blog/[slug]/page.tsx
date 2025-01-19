@@ -1,6 +1,7 @@
 import { BlogPost } from "@/types/blog";
 import CommentsSection from "./components/Comments/CommentsSection";
 import PostDetails from "./components/PostDetails";
+import RecentPosts from "./components/RecentPosts";
 
 export async function generateStaticParams() {
   const posts: BlogPost[] = await fetch(
@@ -19,18 +20,23 @@ export default async function PostPage({
 }) {
   const { slug } = await params;
 
-  const response = await fetch(
+  const postResponse = await fetch(
     `${process.env.NEXT_PUBLIC_BASE_URL}/blog/${slug}`,
   );
+  const post: BlogPost = await postResponse.json();
 
-  const post = await response.json();
+  const recentPostsResponse = await fetch(
+    `${process.env.NEXT_PUBLIC_BASE_URL}/blog`,
+  );
+  const allPosts: BlogPost[] = await recentPostsResponse.json();
 
-  // console.log(post);
+  const recentPosts = allPosts.filter((p) => p.slug !== slug).slice(0, 3);
 
   return (
     <>
       <PostDetails post={post} />
-      <CommentsSection />
+      {/* CommentsSection */}
+      <RecentPosts posts={recentPosts} />
     </>
   );
 }
