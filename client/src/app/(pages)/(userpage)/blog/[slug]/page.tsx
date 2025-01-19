@@ -46,7 +46,7 @@ export async function generateMetadata({
 
   return {
     title: post.title,
-    description: post.description || "Read more about this topic.",
+    description: post.subTitle || "Read more about this topic.",
   };
 }
 

@@ -148,18 +148,21 @@ const PostDetails = ({ post }: PostDetailsProps) => {
                 </Tooltip.Root>
               </Tooltip.Provider>
             </div>
-            <div>
-              <Link
-                href={`/blog?category=${post.category}`}
-                className="text-sm hover:text-primary"
-              >
-                {post.category}
-              </Link>
+            <div className="flex flex-wrap gap-2">
+              {post.category.map((cat, index) => (
+                <Link
+                  key={index}
+                  href={`/blog?category=${cat}`}
+                  className="text-sm hover:text-primary"
+                >
+                  {cat}
+                </Link>
+              ))}
             </div>
           </div>
         </div>
 
-        <div className="flex items-center justify-between py-5 text-sm">
+        {/* <div className="flex items-center justify-between py-5 text-sm">
           <div className="flex">
             <div className="flex flex-wrap items-center gap-5">
               <span>{post.views} views</span>
@@ -176,7 +179,7 @@ const PostDetails = ({ post }: PostDetailsProps) => {
               </span>
             </button>
           </div>
-        </div>
+        </div> */}
       </Container>
     </section>
   );
