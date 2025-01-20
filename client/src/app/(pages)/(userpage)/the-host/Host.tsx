@@ -14,7 +14,7 @@ const Host = () => {
                   <Image
                     src="/images/abdul.jpeg"
                     alt="Abdulhammed"
-                    layout="fill"
+                    fill
                     className="rounded-full object-cover"
                     placeholder={`data:image/svg+xml;base64,${toBase64(shimmer(700, 475))}`}
                   />

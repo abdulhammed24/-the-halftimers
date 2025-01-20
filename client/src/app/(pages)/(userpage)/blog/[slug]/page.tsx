@@ -2,7 +2,6 @@ import { BlogPost } from "@/types/blog";
 
 import BlogPostRead from "./components/BlogPostRead";
 
-// Reusable fetch function
 async function fetchPostData(slug: string) {
   const postResponse = await fetch(
     `${process.env.NEXT_PUBLIC_BASE_URL}/blog/${slug}`,

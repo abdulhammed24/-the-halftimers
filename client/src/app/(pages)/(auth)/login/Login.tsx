@@ -5,7 +5,7 @@ import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useState } from "react";
 import { useToast } from "@/hooks/use-toast";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import {
   Card,
   CardContent,
@@ -32,10 +32,12 @@ type LoginFormData = z.infer<typeof loginSchema>;
 export default function Login() {
   const { toast } = useToast();
   const router = useRouter();
+  const searchParams = useSearchParams();
+  const returnUrl = searchParams?.get("returnUrl") || "/";
+
   const [showPassword, setShowPassword] = useState(false);
   const dispatch = useDispatch();
 
-  // Using the login mutation from Redux
   const [login, { isLoading }] = useLoginMutation();
 
   const {
@@ -58,7 +60,11 @@ export default function Login() {
         duration: 1500,
       });
       reset();
-      router.replace("/");
+
+      const destination =
+        returnUrl !== "/" && returnUrl !== "/login" ? returnUrl : "/";
+      // console.log("Redirecting to:", destination);
+      router.replace(destination);
     } catch (error) {
       const err = error as { data?: { message?: string } };
       toast({
