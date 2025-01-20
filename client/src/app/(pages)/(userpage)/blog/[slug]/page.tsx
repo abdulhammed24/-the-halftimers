@@ -1,7 +1,6 @@
 import { BlogPost } from "@/types/blog";
-import CommentsSection from "./components/Comments/CommentsSection";
-import PostDetails from "./components/PostDetails";
-import RecentPosts from "./components/RecentPosts";
+
+import BlogPostRead from "./components/BlogPostRead";
 
 // Reusable fetch function
 async function fetchPostData(slug: string) {
@@ -60,9 +59,7 @@ export default async function PostPage({
 
   return (
     <>
-      <PostDetails post={post} />
-      {/* CommentsSection */}
-      <RecentPosts posts={recentPosts} />
+      <BlogPostRead post={post} recentPosts={recentPosts} />
     </>
   );
 }
