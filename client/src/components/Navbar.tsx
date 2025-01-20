@@ -2,11 +2,11 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import Container from "./Container";
 import { Popover, PopoverTrigger, PopoverContent } from "./ui/popover";
 import { PopoverClose } from "@radix-ui/react-popover";
 import { Menu, X } from "lucide-react";
+import { useRouter } from "next/navigation";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "@/rtk-query/store";
 import { logout } from "@/rtk-query/features/authSlice";
@@ -19,8 +19,6 @@ const Navbar = () => {
   const { toast } = useToast();
   const [logoutApi] = useLogoutMutation();
   const dispatch = useDispatch();
-  const pathname = usePathname();
-  const searchParams = useSearchParams();
 
   const { userInfo } = useSelector((state: RootState) => state.auth);
   const userFirstName = userInfo?.name?.split(" ")[0] || "User";
@@ -30,12 +28,7 @@ const Navbar = () => {
   };
 
   const handleLogin = () => {
-    const currentPath =
-      pathname +
-      (searchParams?.toString() ? `?${searchParams.toString()}` : "");
-
-    // console.log(currentPath);
-    router.push(`/login?returnUrl=${encodeURIComponent(currentPath)}`);
+    router.push("/login");
   };
 
   const handleLogout = async () => {
