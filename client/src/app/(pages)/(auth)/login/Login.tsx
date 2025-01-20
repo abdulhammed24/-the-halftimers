@@ -1,11 +1,12 @@
 "use client";
 
+import { Suspense } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useState } from "react";
 import { useToast } from "@/hooks/use-toast";
-import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import {
   Card,
   CardContent,
@@ -31,8 +32,8 @@ type LoginFormData = z.infer<typeof loginSchema>;
 
 export default function Login() {
   const { toast } = useToast();
-  const router = useRouter();
   const searchParams = useSearchParams();
+  const router = useRouter();
   const returnUrl = searchParams?.get("returnUrl") || "/";
 
   const [showPassword, setShowPassword] = useState(false);
@@ -63,7 +64,7 @@ export default function Login() {
 
       const destination =
         returnUrl !== "/" && returnUrl !== "/login" ? returnUrl : "/";
-      // console.log("Redirecting to:", destination);
+      console.log("Redirecting to:", destination);
       router.replace(destination);
     } catch (error) {
       const err = error as { data?: { message?: string } };
@@ -78,56 +79,60 @@ export default function Login() {
   };
 
   return (
-    <Card>
-      <CardHeader>
-        <h2 className="text-xl font-bold">Login</h2>
-      </CardHeader>
-      <CardContent>
-        <form onSubmit={handleSubmit(onSubmit)}>
-          <div className="mb-4">
-            <Label htmlFor="email">Email</Label>
-            <Input type="email" id="email" {...register("email")} />
-            {errors.email && (
-              <p className="text-sm text-destructive">{errors.email.message}</p>
-            )}
-          </div>
-          <div className="mb-4">
-            <Label htmlFor="password">Password</Label>
-            <div className="relative">
-              <Input
-                type={showPassword ? "text" : "password"}
-                className="pr-8"
-                id="password"
-                {...register("password")}
-              />
-              <button
-                type="button"
-                onClick={() => setShowPassword(!showPassword)}
-                className="absolute right-2 top-1/2 -translate-y-1/2 transform"
-              >
-                {showPassword ? <EyeOff size={16} /> : <Eye size={16} />}
-              </button>
+    <Suspense fallback={<div>Loading...</div>}>
+      <Card>
+        <CardHeader>
+          <h2 className="text-xl font-bold">Login</h2>
+        </CardHeader>
+        <CardContent>
+          <form onSubmit={handleSubmit(onSubmit)}>
+            <div className="mb-4">
+              <Label htmlFor="email">Email</Label>
+              <Input type="email" id="email" {...register("email")} />
+              {errors.email && (
+                <p className="text-sm text-destructive">
+                  {errors.email.message}
+                </p>
+              )}
             </div>
-            {errors.password && (
-              <p className="text-sm text-destructive">
-                {errors.password.message}
-              </p>
-            )}
-          </div>
-          <Button className="w-full" disabled={isLoading}>
-            {isLoading ? "Logging in..." : "Login"}
-          </Button>
-        </form>
-      </CardContent>
-      <CardFooter className="grid justify-center gap-2 text-center text-sm">
-        <Link href="/forgot-password" className="text-primary">
-          Forgot Password?
-        </Link>
-        <Link href="/register" className="text-sm">
-          Don't have an account?{" "}
-          <span className="text-primary hover:underline">Register</span>
-        </Link>
-      </CardFooter>
-    </Card>
+            <div className="mb-4">
+              <Label htmlFor="password">Password</Label>
+              <div className="relative">
+                <Input
+                  type={showPassword ? "text" : "password"}
+                  className="pr-8"
+                  id="password"
+                  {...register("password")}
+                />
+                <button
+                  type="button"
+                  onClick={() => setShowPassword(!showPassword)}
+                  className="absolute right-2 top-1/2 -translate-y-1/2 transform"
+                >
+                  {showPassword ? <EyeOff size={16} /> : <Eye size={16} />}
+                </button>
+              </div>
+              {errors.password && (
+                <p className="text-sm text-destructive">
+                  {errors.password.message}
+                </p>
+              )}
+            </div>
+            <Button className="w-full" disabled={isLoading}>
+              {isLoading ? "Logging in..." : "Login"}
+            </Button>
+          </form>
+        </CardContent>
+        <CardFooter className="grid justify-center gap-2 text-center text-sm">
+          <Link href="/forgot-password" className="text-primary">
+            Forgot Password?
+          </Link>
+          <Link href="/register" className="text-sm">
+            Don't have an account?{" "}
+            <span className="text-primary hover:underline">Register</span>
+          </Link>
+        </CardFooter>
+      </Card>
+    </Suspense>
   );
 }
