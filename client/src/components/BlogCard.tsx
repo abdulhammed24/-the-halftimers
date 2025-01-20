@@ -1,15 +1,39 @@
+"use client";
 import Image from "next/image";
 import { CircleUser, Heart } from "lucide-react";
 import { shimmer, toBase64 } from "@/utils/imageUtils";
-import Link from "next/link";
+
 import { BlogPost } from "@/types/blog";
 import { formatDate } from "@/utils/formatDate";
+import { useSelector } from "react-redux";
+import { RootState } from "@/rtk-query/store";
+import { useToast } from "@/hooks/use-toast";
+import { useRouter } from "next/navigation";
 
 interface BlogCardProps {
   post: BlogPost;
 }
 
 const BlogCard: React.FC<BlogCardProps> = ({ post }) => {
+  const { toast } = useToast();
+  const router = useRouter();
+
+  const { userInfo } = useSelector((state: RootState) => state.auth);
+
+  const handleClick = (e: React.MouseEvent) => {
+    e.preventDefault();
+
+    if (userInfo) {
+      router.push(`/blog/${post.slug}`);
+    } else {
+      toast({
+        title: "Authentication Required",
+        description: "Please login to read the full article",
+        duration: 3000,
+      });
+    }
+  };
+
   return (
     <div className="grid hover:shadow-md md:grid-cols-2">
       <div className="relative overflow-hidden pt-[60%]">
@@ -22,9 +46,9 @@ const BlogCard: React.FC<BlogCardProps> = ({ post }) => {
           sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
         />
       </div>
-      <Link
-        href={`/blog/${post.slug}`}
-        className="bg-primary-foreground p-8 text-[10px]"
+      <div
+        onClick={handleClick}
+        className="cursor-pointer bg-primary-foreground p-8 text-[10px]"
       >
         <div className="mb-3 flex items-center gap-3">
           <span>
@@ -72,7 +96,7 @@ const BlogCard: React.FC<BlogCardProps> = ({ post }) => {
             </div>
           </div>
         </div> */}
-      </Link>
+      </div>
     </div>
   );
 };
