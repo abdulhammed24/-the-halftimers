@@ -6,16 +6,27 @@ import Link from "next/link";
 import BlogCard from "@/components/BlogCard";
 import { BlogPost } from "@/types/blog";
 import { Skeleton } from "@/components/ui/skeleton";
+import { useRouter } from "next/navigation";
+import { notFound } from "next/navigation";
 
 interface BlogContentProps {
   posts: BlogPost[];
 }
 
+const VALID_CATEGORIES = ["all posts", "featured", "football", "other sports"];
+
 const BlogContent: React.FC<BlogContentProps> = ({ posts }) => {
   const [filteredPosts, setFilteredPosts] = useState<BlogPost[]>(posts);
   const searchParams = useSearchParams();
+  const router = useRouter();
   const initialCategory =
     searchParams.get("category")?.toLowerCase() || "all posts";
+
+  // Validate category
+  if (!VALID_CATEGORIES.includes(initialCategory)) {
+    notFound();
+  }
+
   const [category, setCategory] = useState(initialCategory);
 
   useEffect(() => {
@@ -37,7 +48,7 @@ const BlogContent: React.FC<BlogContentProps> = ({ posts }) => {
   ) => {
     const selectedCategory = event.target.value;
     setCategory(selectedCategory);
-    window.history.pushState({}, "", `/blog?category=${selectedCategory}`);
+    router.push(`/blog?category=${selectedCategory}`);
   };
 
   return (
@@ -45,13 +56,18 @@ const BlogContent: React.FC<BlogContentProps> = ({ posts }) => {
       <div className="mx-auto bg-primary-foreground p-6 lg:w-[calc(100%-160px-160px)] lg:p-10">
         {/* Desktop Navigation */}
         <div className="mb-6 hidden flex-wrap lg:flex">
-          {["all posts", "featured", "football", "other sports"].map((cat) => (
+          {VALID_CATEGORIES.map((cat) => (
             <Link
               href={`/blog?category=${cat}`}
               key={cat}
-              className={`px-4 py-2 text-sm font-bold italic ${category === cat ? "bg-primary text-white" : "text-foreground"}`}
+              className={`px-4 py-2 text-sm font-bold italic ${
+                category === cat ? "bg-primary text-white" : "text-foreground"
+              }`}
             >
-              {cat.charAt(0).toUpperCase() + cat.slice(1)}
+              {cat
+                .split(" ")
+                .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+                .join(" ")}
             </Link>
           ))}
         </div>
@@ -63,10 +79,14 @@ const BlogContent: React.FC<BlogContentProps> = ({ posts }) => {
             value={category}
             className="bg-white px-4 py-2 text-sm font-bold italic text-foreground"
           >
-            <option value="all posts">All Posts</option>
-            <option value="featured">Featured</option>
-            <option value="football">Football</option>
-            <option value="other sports">Other Sports</option>
+            {VALID_CATEGORIES.map((cat) => (
+              <option key={cat} value={cat}>
+                {cat
+                  .split(" ")
+                  .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+                  .join(" ")}
+              </option>
+            ))}
           </select>
         </div>
 
@@ -84,6 +104,8 @@ const BlogContent: React.FC<BlogContentProps> = ({ posts }) => {
     </section>
   );
 };
+
+export default BlogContent;
 
 function LatestNewsSkeleton() {
   return (
@@ -108,5 +130,3 @@ function LatestNewsSkeleton() {
     </section>
   );
 }
-
-export default BlogContent;
