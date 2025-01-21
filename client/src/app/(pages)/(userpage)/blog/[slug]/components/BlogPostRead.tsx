@@ -18,8 +18,8 @@ export default function BlogPostRead({ post, recentPosts }: BlogPostReadProps) {
 
   if (!userInfo) {
     return (
-      <div className="flex min-h-screen flex-col items-center justify-center bg-gray-100 p-6 text-center">
-        <h1 className="text-red mb-4 text-4xl font-bold">
+      <div className="flex min-h-[60vh] flex-col items-center justify-center p-6 text-center">
+        <h1 className="text-red mb-4 text-2xl font-bold md:text-4xl">
           Authentication Required
         </h1>
         <p className="mb-6 text-lg text-gray-700">
