@@ -14,7 +14,7 @@ export default function Featured({ posts }: FeaturedProps) {
       <Container width="large">
         <div className="bg-primary-foreground py-10 lg:p-10">
           <div className="relative mb-5 before:absolute before:left-0 before:top-1/2 before:h-px before:w-10 before:-translate-y-1/2 before:bg-foreground before:content-['']">
-            <h2 className="ml-14 text-sm font-bold italic">Featured</h2>
+            <h2 className="ml-14 text-sm font-bold italic">Latest News</h2>
           </div>
           <BlogCard post={featuredPost} />
         </div>

@@ -14,7 +14,7 @@ export default function LatestNews({ posts }: LatestNewsProps) {
       <Container width="large">
         <div className="lg:p-10">
           <div className="mb-10">
-            <h2 className="text-3xl font-bold italic">The Latest News</h2>
+            <h2 className="text-3xl font-bold italic">The Recent News</h2>
           </div>
           <div className="flex flex-col items-center">
             <div className="mb-12 w-full space-y-10">
