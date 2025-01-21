@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import Container from "./Container";
 import { Popover, PopoverTrigger, PopoverContent } from "./ui/popover";
 import { PopoverClose } from "@radix-ui/react-popover";
@@ -12,10 +13,12 @@ import { RootState } from "@/rtk-query/store";
 import { logout } from "@/rtk-query/features/authSlice";
 import { useToast } from "@/hooks/use-toast";
 import { useLogoutMutation } from "@/rtk-query/features/authApi";
+import { cn } from "@/lib/utils";
 
 const Navbar = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const router = useRouter();
+  const pathname = usePathname();
   const { toast } = useToast();
   const [logoutApi] = useLogoutMutation();
   const dispatch = useDispatch();
@@ -53,6 +56,10 @@ const Navbar = () => {
     }
   };
 
+  const isLinkActive = (href: string) => {
+    return pathname === href;
+  };
+
   return (
     <nav className="sticky top-0 z-50 w-full bg-primary-foreground">
       <Container>
@@ -61,7 +68,10 @@ const Navbar = () => {
             <div className="relative before:absolute before:left-0 before:top-1/2 before:h-1 before:w-5 before:-translate-y-1/2 before:bg-foreground before:content-['']">
               <Link
                 href="/"
-                className="ml-7 text-lg font-bold italic lg:text-2xl"
+                className={cn(
+                  "ml-7 text-lg font-bold italic lg:text-2xl",
+                  isLinkActive("/") && "text-primary",
+                )}
               >
                 The Halftimers
               </Link>
@@ -69,10 +79,22 @@ const Navbar = () => {
           </div>
 
           <div className="hidden items-center space-x-8 md:flex">
-            <Link href="/blog" className="text-sm hover:text-primary">
+            <Link
+              href="/blog"
+              className={cn(
+                "text-sm transition-colors hover:text-primary",
+                isLinkActive("/blog") && "font-medium text-primary",
+              )}
+            >
               Blog
             </Link>
-            <Link href="/the-host" className="text-sm hover:text-primary">
+            <Link
+              href="/the-host"
+              className={cn(
+                "text-sm transition-colors hover:text-primary",
+                isLinkActive("/the-host") && "font-medium text-primary",
+              )}
+            >
               The Host
             </Link>
 
@@ -155,14 +177,20 @@ const Navbar = () => {
             )}
             <Link
               href="/blog"
-              className="text-gray-800 hover:text-primary"
+              className={cn(
+                "text-gray-800 transition-colors hover:text-primary",
+                isLinkActive("/blog") && "font-medium text-primary",
+              )}
               onClick={toggleMobileMenu}
             >
               Blog
             </Link>
             <Link
               href="/the-host"
-              className="text-gray-800 hover:text-primary"
+              className={cn(
+                "text-gray-800 transition-colors hover:text-primary",
+                isLinkActive("/the-host") && "font-medium text-primary",
+              )}
               onClick={toggleMobileMenu}
             >
               The Host
