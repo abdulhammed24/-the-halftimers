@@ -28,7 +28,8 @@ const BlogCard: React.FC<BlogCardProps> = ({ post }) => {
     } else {
       toast({
         title: "Authentication Required",
-        description: "Please login to read the full article",
+        description:
+          "Please create an account / login to read the full article",
         duration: 3000,
       });
     }

@@ -23,7 +23,7 @@ export default function BlogPostRead({ post, recentPosts }: BlogPostReadProps) {
           Authentication Required
         </h1>
         <p className="mb-6 text-lg text-gray-700">
-          Please login to view this blog post
+          Please create an account / login to view this blog post
         </p>
         <Link href="/login">
           <p className="text-primary hover:underline">Login</p>
