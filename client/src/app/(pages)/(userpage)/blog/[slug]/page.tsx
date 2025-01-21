@@ -7,7 +7,7 @@ async function fetchPostData(slug: string) {
     const postResponse = await fetch(
       `${process.env.NEXT_PUBLIC_BASE_URL}/blog/${slug}`,
       {
-        cache: "force-cache",
+        next: { revalidate: 3600 },
       },
     );
     if (!postResponse.ok) {
@@ -20,7 +20,7 @@ async function fetchPostData(slug: string) {
     const recentPostsResponse = await fetch(
       `${process.env.NEXT_PUBLIC_BASE_URL}/blog`,
       {
-        cache: "force-cache",
+        next: { revalidate: 3600 },
       },
     );
     if (!recentPostsResponse.ok) {
@@ -40,7 +40,7 @@ async function fetchPostData(slug: string) {
 export async function generateStaticParams() {
   try {
     const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/blog`, {
-      cache: "force-cache",
+      next: { revalidate: 3600 },
     });
     if (!response.ok) {
       return [];
