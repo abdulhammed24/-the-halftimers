@@ -66,6 +66,13 @@ export async function generateMetadata({
   return {
     title: data.post.title,
     description: data.post.subTitle || "Read more about this topic.",
+    openGraph: {
+      images: [
+        {
+          url: data.post.imageSrc,
+        },
+      ],
+    },
   };
 }
 
