@@ -1,5 +1,5 @@
 import Container from "@/components/Container";
-import { shimmer, toBase64 } from "@/utils/imageUtils";
+import hero from "../../../../../../public/images/hero.jpg";
 
 import Image from "next/image";
 const Hero = () => {
@@ -8,11 +8,12 @@ const Hero = () => {
       <Container className="relative max-md:max-w-full max-md:px-0">
         <div className="relative z-0 h-[400px] w-full overflow-hidden lg:h-[600px]">
           <Image
-            src="https://static.wixstatic.com/media/c22c23_ab84fc9dae5646df8722fb28876e32cf~mv2_d_4941_3288_s_4_2.jpg/v1/fill/w_1339,h_590,al_b,q_85,usm_0.66_1.00_0.01,enc_avif,quality_auto/c22c23_ab84fc9dae5646df8722fb28876e32cf~mv2_d_4941_3288_s_4_2.jpg"
+            src={hero}
             alt="hero"
             fill
             className="object-cover"
-            placeholder={`data:image/svg+xml;base64,${toBase64(shimmer(700, 475))}`}
+            placeholder="blur"
+            priority
           />
 
           <div className="absolute z-10 flex w-full flex-col items-center justify-center py-40 text-center">

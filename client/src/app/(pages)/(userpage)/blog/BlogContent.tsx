@@ -16,8 +16,12 @@ interface BlogContentProps {
 const VALID_CATEGORIES = ["all posts", "featured", "football", "other sports"];
 
 const BlogContent: React.FC<BlogContentProps> = ({ initialPosts }) => {
-  const [posts, setPosts] = useState<BlogPost[]>(initialPosts);
-  const [filteredPosts, setFilteredPosts] = useState<BlogPost[]>(initialPosts);
+  const sortedPosts = initialPosts.sort(
+    (a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime(),
+  );
+
+  const [posts, setPosts] = useState<BlogPost[]>(sortedPosts);
+  const [filteredPosts, setFilteredPosts] = useState<BlogPost[]>(sortedPosts);
   const router = useRouter();
 
   return (

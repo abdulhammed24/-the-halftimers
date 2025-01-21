@@ -10,18 +10,30 @@ import { BlogPost } from "@/types/blog";
 export default async function HomePage() {
   const posts: BlogPost[] = await fetchPosts();
 
+  // Sort posts by creation date
+  const sortedPosts = posts.sort(
+    (a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime(),
+  );
+
+  // The first post is the latest post
+  const latestPost = sortedPosts[0];
+  // The rest are the older posts
+  const latestNewsPosts = sortedPosts.slice(1);
+
+  // console.log(latestPost, latestNewsPosts);
+
   return (
     <>
       <Hero />
 
       <Suspense fallback={<FeaturedSkeleton />}>
-        <Featured posts={posts} />
+        <Featured posts={[latestPost]} />
       </Suspense>
 
       <Podcast />
 
       <Suspense fallback={<LatestNewsSkeleton />}>
-        <LatestNews posts={posts} />
+        <LatestNews posts={latestNewsPosts} />
       </Suspense>
     </>
   );

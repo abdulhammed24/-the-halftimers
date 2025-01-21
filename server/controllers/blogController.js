@@ -32,7 +32,7 @@ export const createBlogPost = async (req, res) => {
 // Get all blog posts
 export const getAllBlogPosts = async (req, res) => {
   try {
-    const blogPosts = await Blog.find().populate("author", "name");
+    const blogPosts = await Blog.find().populate("author", "name").sort({ createdAt: -1 });
     res.status(200).json(blogPosts);
   } catch (error) {
     res.status(500).json({ message: error.message });

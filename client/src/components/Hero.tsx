@@ -1,6 +1,7 @@
 import { shimmer, toBase64 } from "@/utils/imageUtils";
 import Image from "next/image";
 import Container from "./Container";
+import hero from "../../public/images/pages_heroBg.png";
 
 interface HeroProps {
   title: string;
@@ -13,11 +14,12 @@ const Hero: React.FC<HeroProps> = ({ title }) => {
         <div className="relative w-full overflow-hidden bg-foreground">
           <div className="absolute inset-0 z-0 overflow-hidden">
             <Image
-              src="https://static.wixstatic.com/media/c22c23_198d3d91eb9f452ba01e164086abf6b1~mv2_d_3008_1703_s_2.png/v1/fill/w_1189,h_214,al_c,q_85,usm_0.66_1.00_0.01,enc_avif,quality_auto/c22c23_198d3d91eb9f452ba01e164086abf6b1~mv2_d_3008_1703_s_2.png"
+              src={hero}
               alt="hero-bg"
               fill
               className="-z-[1] object-cover"
-              placeholder={`data:image/svg+xml;base64,${toBase64(shimmer(700, 475))}`}
+              placeholder="blur"
+              priority
             />
           </div>
           <div className="z-20 pb-12 pt-12 max-md:px-6 md:pb-28 md:pl-32">
