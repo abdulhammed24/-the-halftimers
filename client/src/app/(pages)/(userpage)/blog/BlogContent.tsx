@@ -4,19 +4,33 @@ import { useState, useEffect, Suspense } from "react";
 import { useSearchParams } from "next/navigation";
 import Link from "next/link";
 import BlogCard from "@/components/BlogCard";
-import { BlogPost } from "@/types/blog";
+import type { BlogPost } from "@/types/blog";
 import { Skeleton } from "@/components/ui/skeleton";
 import { useRouter } from "next/navigation";
 import { notFound } from "next/navigation";
 
 interface BlogContentProps {
-  posts: BlogPost[];
+  initialPosts: BlogPost[];
 }
 
 const VALID_CATEGORIES = ["all posts", "featured", "football", "other sports"];
 
-const BlogContent: React.FC<BlogContentProps> = ({ posts }) => {
-  const [filteredPosts, setFilteredPosts] = useState<BlogPost[]>(posts);
+const BlogContent: React.FC<BlogContentProps> = ({ initialPosts }) => {
+  const [posts, setPosts] = useState<BlogPost[]>(initialPosts);
+  const [filteredPosts, setFilteredPosts] = useState<BlogPost[]>(initialPosts);
+  const router = useRouter();
+
+  return (
+    <Suspense fallback={<LatestNewsSkeleton />}>
+      <BlogContentInner posts={posts} initialFilteredPosts={filteredPosts} />
+    </Suspense>
+  );
+};
+
+const BlogContentInner: React.FC<{
+  posts: BlogPost[];
+  initialFilteredPosts: BlogPost[];
+}> = ({ posts, initialFilteredPosts }) => {
   const searchParams = useSearchParams();
   const router = useRouter();
   const initialCategory =
@@ -28,6 +42,7 @@ const BlogContent: React.FC<BlogContentProps> = ({ posts }) => {
   }
 
   const [category, setCategory] = useState(initialCategory);
+  const [filteredPosts, setFilteredPosts] = useState(initialFilteredPosts);
 
   useEffect(() => {
     const newFilteredPosts =
@@ -90,22 +105,18 @@ const BlogContent: React.FC<BlogContentProps> = ({ posts }) => {
           </select>
         </div>
 
-        {/* Blog Cards with Suspense */}
+        {/* Blog Cards */}
         <div className="flex flex-col items-center">
           <div className="mb-12 w-full space-y-10">
-            <Suspense fallback={<LatestNewsSkeleton />}>
-              {filteredPosts.map((post) => (
-                <BlogCard key={post._id} post={post} />
-              ))}
-            </Suspense>
+            {filteredPosts.map((post) => (
+              <BlogCard key={post._id} post={post} />
+            ))}
           </div>
         </div>
       </div>
     </section>
   );
 };
-
-export default BlogContent;
 
 function LatestNewsSkeleton() {
   return (
@@ -130,3 +141,5 @@ function LatestNewsSkeleton() {
     </section>
   );
 }
+
+export default BlogContent;

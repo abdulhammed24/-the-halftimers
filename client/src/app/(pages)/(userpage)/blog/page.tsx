@@ -14,7 +14,7 @@ export default async function BlogPage() {
   return (
     <>
       <Hero title="Blog" />
-      <BlogContent posts={posts} />
+      <BlogContent initialPosts={posts} />
     </>
   );
 }
