@@ -1,37 +1,58 @@
+import { notFound } from "next/navigation";
 import { BlogPost } from "@/types/blog";
-
 import BlogPostRead from "./components/BlogPostRead";
 
 async function fetchPostData(slug: string) {
-  const postResponse = await fetch(
-    `${process.env.NEXT_PUBLIC_BASE_URL}/blog/${slug}`,
-  );
-  if (!postResponse.ok) {
-    throw new Error(`Failed to fetch post with slug: ${slug}`);
+  try {
+    const postResponse = await fetch(
+      `${process.env.NEXT_PUBLIC_BASE_URL}/blog/${slug}`,
+      {
+        cache: "force-cache",
+      },
+    );
+    if (!postResponse.ok) {
+      console.error(`Failed to fetch post with slug: ${slug}`);
+      return notFound();
+    }
+    const post: BlogPost = await postResponse.json();
+    if (!post) return notFound();
+
+    const recentPostsResponse = await fetch(
+      `${process.env.NEXT_PUBLIC_BASE_URL}/blog`,
+      {
+        cache: "force-cache",
+      },
+    );
+    if (!recentPostsResponse.ok) {
+      console.error("Failed to fetch recent posts");
+      return notFound();
+    }
+    const allPosts: BlogPost[] = await recentPostsResponse.json();
+    const recentPosts = allPosts.filter((p) => p.slug !== slug).slice(0, 3);
+
+    return { post, recentPosts };
+  } catch (error) {
+    console.error("Error fetching post data:", error);
+    return notFound();
   }
-  const post: BlogPost = await postResponse.json();
-
-  const recentPostsResponse = await fetch(
-    `${process.env.NEXT_PUBLIC_BASE_URL}/blog`,
-  );
-  if (!recentPostsResponse.ok) {
-    throw new Error("Failed to fetch recent posts");
-  }
-  const allPosts: BlogPost[] = await recentPostsResponse.json();
-
-  const recentPosts = allPosts.filter((p) => p.slug !== slug).slice(0, 3);
-
-  return { post, recentPosts };
 }
 
 export async function generateStaticParams() {
-  const posts: BlogPost[] = await fetch(
-    `${process.env.NEXT_PUBLIC_BASE_URL}/blog`,
-  ).then((res) => res.json());
-
-  return posts.map((post) => ({
-    slug: String(post.slug),
-  }));
+  try {
+    const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/blog`, {
+      cache: "force-cache",
+    });
+    if (!response.ok) {
+      return [];
+    }
+    const posts: BlogPost[] = await response.json();
+    return posts.map((post) => ({
+      slug: String(post.slug),
+    }));
+  } catch (error) {
+    console.error("Error generating static params:", error);
+    return [];
+  }
 }
 
 export async function generateMetadata({
@@ -40,11 +61,11 @@ export async function generateMetadata({
   params: Promise<{ slug: string }>;
 }) {
   const { slug } = await params;
-  const { post } = await fetchPostData(slug);
+  const data = await fetchPostData(slug);
 
   return {
-    title: post.title,
-    description: post.subTitle || "Read more about this topic.",
+    title: data.post.title,
+    description: data.post.subTitle || "Read more about this topic.",
   };
 }
 
@@ -54,11 +75,7 @@ export default async function PostPage({
   params: Promise<{ slug: string }>;
 }) {
   const { slug } = await params;
-  const { post, recentPosts } = await fetchPostData(slug);
+  const data = await fetchPostData(slug);
 
-  return (
-    <>
-      <BlogPostRead post={post} recentPosts={recentPosts} />
-    </>
-  );
+  return <BlogPostRead post={data.post} recentPosts={data.recentPosts} />;
 }
