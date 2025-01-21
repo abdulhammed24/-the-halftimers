@@ -36,7 +36,7 @@ const BlogCard: React.FC<BlogCardProps> = ({ post }) => {
   };
 
   return (
-    <div className="grid hover:shadow-md md:grid-cols-2">
+    <div onClick={handleClick} className="grid hover:shadow-md md:grid-cols-2">
       <div className="relative overflow-hidden pt-[60%]">
         <Image
           src={post.imageSrc}
@@ -47,10 +47,7 @@ const BlogCard: React.FC<BlogCardProps> = ({ post }) => {
           sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
         />
       </div>
-      <div
-        onClick={handleClick}
-        className="cursor-pointer bg-primary-foreground p-8 text-[10px]"
-      >
+      <div className="cursor-pointer bg-primary-foreground p-8 text-[10px]">
         <div className="mb-3 flex items-center gap-3">
           <span>
             <CircleUser />
