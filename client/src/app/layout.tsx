@@ -17,6 +17,10 @@ export const metadata: Metadata = {
   },
   description:
     "A blog web app dedicated to sports enthusiasts, providing insights, analysis, and updates.",
+  metadataBase: new URL("https://the-halftimers.vercel.app/"),
+  verification: {
+    google: "wb59er5Yiw1Jlti3wSvBnZyY0S_JPqXKMW0zZzwv4O0",
+  },
 };
 
 export default function RootLayout({
