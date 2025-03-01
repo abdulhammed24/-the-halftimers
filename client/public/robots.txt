@@ -1,0 +1,9 @@
+# *
+User-agent: *
+Allow: /
+
+# Host
+Host: https://the-halftimers.vercel.app/
+
+# Sitemaps
+Sitemap: https://the-halftimers.vercel.app/sitemap.xml
